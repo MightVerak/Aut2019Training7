@@ -12,6 +12,26 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+    public function initialize()
+    {
+    parent::initialize();
+
+        $this->loadComponent('RequestHandler', [
+            'enableBeforeRedirect' => false,
+        ]);
+        $this->loadComponent('Flash');
+
+        /*
+         * Enable the following component for recommended CakePHP security settings.
+         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
+         */
+        $this->loadComponent('Security');
+        $this->Auth->allow(['login','logout']);
+    }
+
+
+        
+
     /**
      * Index method
      *
@@ -33,9 +53,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Articles']
-        ]);
+        $user = $this->Users->get($id, []);
 
         $this->set('user', $user);
     }
@@ -103,4 +121,23 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('Your username or password is incorrect.');
+        }
+    }
+
+    public function logout()
+{
+    $this->Flash->success('You are now logged out.');
+    return $this->redirect($this->Auth->redirectUrl(array('controller' => 'Home','action'=> 'index')));
+}
+
 }
