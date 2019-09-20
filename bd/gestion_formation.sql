@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Ven 20 Septembre 2019 à 22:13
+-- Généré le :  Sam 21 Septembre 2019 à 00:36
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -49,7 +49,10 @@ CREATE TABLE `buildings` (
 --
 
 INSERT INTO `buildings` (`id`, `building`) VALUES
-(1, '4033 Lynden Road, Niagara On The Lake Ontario L0S 1J0');
+(1, '4033 Lynden Road, Niagara On The Lake Ontario L0S 1J0'),
+(2, '1046 Papineau Avenue, Montreal, Quebec H2K 4J5'),
+(3, '1317 7th Ave, Calgary, Alberta T2P 0W4'),
+(4, '218 King George Hwy, Surrey, Brisith Columbia V3W 4E3');
 
 -- --------------------------------------------------------
 
@@ -68,7 +71,11 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Santé et sécurité'),
-(2, 'Environnement');
+(2, 'Environnement'),
+(3, 'Qualité'),
+(4, 'Ressources humaines'),
+(5, 'Santé et bien-être'),
+(6, 'Approvisionnement');
 
 -- --------------------------------------------------------
 
@@ -80,6 +87,14 @@ CREATE TABLE `civilities` (
   `id` int(11) NOT NULL,
   `civility` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `civilities`
+--
+
+INSERT INTO `civilities` (`id`, `civility`) VALUES
+(1, 'M.'),
+(2, 'Mme');
 
 -- --------------------------------------------------------
 
@@ -150,6 +165,28 @@ CREATE TABLE `formations_position_title_of_formations` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `formation_statuses`
+--
+
+CREATE TABLE `formation_statuses` (
+  `id` int(11) NOT NULL,
+  `formation_status` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `formation_statuses`
+--
+
+INSERT INTO `formation_statuses` (`id`, `formation_status`) VALUES
+(1, 'Non-applicable'),
+(2, 'Obligatoire'),
+(3, 'Obligatoire si le risque est présent dans l\'immeuble ou si les taches de l\'employé l\'exigent'),
+(4, 'Recommandé'),
+(5, 'Selon le besoin (voir avec le département SST)');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `languages`
 --
 
@@ -157,6 +194,14 @@ CREATE TABLE `languages` (
   `id` int(11) NOT NULL,
   `language` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `languages`
+--
+
+INSERT INTO `languages` (`id`, `language`) VALUES
+(1, 'Français'),
+(2, 'Anglais');
 
 -- --------------------------------------------------------
 
@@ -166,8 +211,17 @@ CREATE TABLE `languages` (
 
 CREATE TABLE `modalities` (
   `id` int(11) NOT NULL,
-  `modality` int(11) NOT NULL
+  `modality` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `modalities`
+--
+
+INSERT INTO `modalities` (`id`, `modality`) VALUES
+(1, 'En ligne'),
+(2, 'Externe'),
+(3, 'Interne');
 
 -- --------------------------------------------------------
 
@@ -185,7 +239,17 @@ CREATE TABLE `position_titles` (
 --
 
 INSERT INTO `position_titles` (`id`, `position_title`) VALUES
-(1, 'Technicien immeuble');
+(1, 'Technicien immeuble'),
+(2, 'Gestionnaire'),
+(3, 'Coordonnateur projet'),
+(4, 'Stagiaire'),
+(5, 'Coordonnateur SST'),
+(6, 'Adjointe administrative'),
+(7, 'Coordonateur service à l\'immeuble'),
+(8, 'Gestionnaire de projet'),
+(9, 'Gestionnaire d\'équipe de projet'),
+(10, 'Administrateur de projet'),
+(11, 'Adjointe administrative');
 
 -- --------------------------------------------------------
 
@@ -196,7 +260,7 @@ INSERT INTO `position_titles` (`id`, `position_title`) VALUES
 CREATE TABLE `position_title_of_formations` (
   `id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL
+  `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -210,6 +274,14 @@ CREATE TABLE `supervisors` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Contenu de la table `supervisors`
+--
+
+INSERT INTO `supervisors` (`id`, `name`) VALUES
+(1, 'Évelyne Poincaré'),
+(2, 'Maxence Brunet');
+
 -- --------------------------------------------------------
 
 --
@@ -220,6 +292,24 @@ CREATE TABLE `time_tables` (
   `id` int(11) NOT NULL,
   `time_select` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `time_tables`
+--
+
+INSERT INTO `time_tables` (`id`, `time_select`) VALUES
+(1, '1 semaine'),
+(2, '1 mois'),
+(3, '3 mois'),
+(4, '6 mois'),
+(5, '18 mois'),
+(6, '1 an'),
+(7, '2 ans'),
+(8, '3 ans'),
+(9, '4 ans'),
+(10, '5 ans'),
+(11, 'Aux besoins'),
+(12, 'Une seul fois');
 
 -- --------------------------------------------------------
 
@@ -234,6 +324,13 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `admin` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `admin`) VALUES
+(1, 'admin', '$2y$10$aXq5PYd8JVIe4WtqLdAre.aoEH2LQUcZSQo.xPSdvUUx44SnjtNju', 'admin@admin.com', 1);
 
 --
 -- Index pour les tables exportées
@@ -301,6 +398,12 @@ ALTER TABLE `formations_position_title_of_formations`
   ADD KEY `formation_id` (`formation_id`);
 
 --
+-- Index pour la table `formation_statuses`
+--
+ALTER TABLE `formation_statuses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `languages`
 --
 ALTER TABLE `languages`
@@ -323,7 +426,7 @@ ALTER TABLE `position_titles`
 --
 ALTER TABLE `position_title_of_formations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`);
+  ADD KEY `status` (`status_id`);
 
 --
 -- Index pour la table `supervisors`
@@ -356,17 +459,17 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT pour la table `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `civilities`
 --
 ALTER TABLE `civilities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `employees`
 --
@@ -383,20 +486,25 @@ ALTER TABLE `employee_formations`
 ALTER TABLE `formations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT pour la table `formation_statuses`
+--
+ALTER TABLE `formation_statuses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT pour la table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `modalities`
 --
 ALTER TABLE `modalities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `position_titles`
 --
 ALTER TABLE `position_titles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `position_title_of_formations`
 --
@@ -406,17 +514,17 @@ ALTER TABLE `position_title_of_formations`
 -- AUTO_INCREMENT pour la table `supervisors`
 --
 ALTER TABLE `supervisors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `time_tables`
 --
 ALTER TABLE `time_tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --
