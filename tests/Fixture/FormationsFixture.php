@@ -33,6 +33,10 @@ class FormationsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'formations_ibfk_1' => ['type' => 'foreign', 'columns' => ['categorie_id'], 'references' => ['categories', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'formations_ibfk_2' => ['type' => 'foreign', 'columns' => ['frequence_id'], 'references' => ['frequences', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'formations_ibfk_4' => ['type' => 'foreign', 'columns' => ['modality_id'], 'references' => ['modalities', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'formations_ibfk_5' => ['type' => 'foreign', 'columns' => ['start_reminder_id'], 'references' => ['start_reminders', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',

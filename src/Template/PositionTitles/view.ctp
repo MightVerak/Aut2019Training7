@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="positionTitles view large-9 medium-8 columns content">
-    <h3><?= h($positionTitle->id) ?></h3>
+    <h3><?= h($positionTitle->position_title) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Position Title') ?></th>

@@ -33,7 +33,7 @@ class CivilitiesTable extends Table
         parent::initialize($config);
 
         $this->setTable('civilities');
-        $this->setDisplayField('id');
+        $this->setDisplayField('civility');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Employees', [

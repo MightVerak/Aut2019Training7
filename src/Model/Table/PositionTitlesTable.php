@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * PositionTitles Model
  *
  * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\HasMany $Employees
+ * @property &\Cake\ORM\Association\BelongsToMany $Formations
  *
  * @method \App\Model\Entity\PositionTitle get($primaryKey, $options = [])
  * @method \App\Model\Entity\PositionTitle newEntity($data = null, array $options = [])
@@ -33,11 +34,16 @@ class PositionTitlesTable extends Table
         parent::initialize($config);
 
         $this->setTable('position_titles');
-        $this->setDisplayField('id');
+        $this->setDisplayField('position_title');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Employees', [
             'foreignKey' => 'position_title_id'
+        ]);
+        $this->belongsToMany('Formations', [
+            'foreignKey' => 'position_title_id',
+            'targetForeignKey' => 'formation_id',
+            'joinTable' => 'formations_position_titles'
         ]);
     }
 

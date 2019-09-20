@@ -44,10 +44,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="top-bar-section">
         <ul>
             <li>
-            <?= $this->Html->link('Gestion Formation',['controller'=> 'GestionFormation','action' => 'index']) ?>
+            <?= $this->Html->link('Gestion Formation',['controller'=> 'Formations','action' => 'index']) ?>
             </li>
             <li>
-            <?= $this->Html->link('Gestion Employer',['controller'=> 'GestionEmployer','action' => 'index']) ?>
+            <?= $this->Html->link('Gestion Employer',['controller'=> 'Employees','action' => 'index']) ?>
             </li>
         </ul>
 

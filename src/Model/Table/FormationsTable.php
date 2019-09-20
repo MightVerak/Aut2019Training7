@@ -14,8 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\StartRemindersTable&\Cake\ORM\Association\BelongsTo $StartReminders
  * @property \App\Model\Table\ModalitiesTable&\Cake\ORM\Association\BelongsTo $Modalities
  * @property \App\Model\Table\EmployeeFormationsTable&\Cake\ORM\Association\HasMany $EmployeeFormations
- * @property \App\Model\Table\FormationsPositionTitleOfFormationsTable&\Cake\ORM\Association\HasMany $FormationsPositionTitleOfFormations
- * @property \App\Model\Table\PositionTitleOfFormationsTable&\Cake\ORM\Association\BelongsToMany $PositionTitleOfFormations
+ * @property &\Cake\ORM\Association\BelongsToMany $PositionTitles
  *
  * @method \App\Model\Entity\Formation get($primaryKey, $options = [])
  * @method \App\Model\Entity\Formation newEntity($data = null, array $options = [])
@@ -61,13 +60,10 @@ class FormationsTable extends Table
         $this->hasMany('EmployeeFormations', [
             'foreignKey' => 'formation_id'
         ]);
-        $this->hasMany('FormationsPositionTitleOfFormations', [
-            'foreignKey' => 'formation_id'
-        ]);
-        $this->belongsToMany('PositionTitleOfFormations', [
+        $this->belongsToMany('PositionTitles', [
             'foreignKey' => 'formation_id',
-            'targetForeignKey' => 'position_title_of_formation_id',
-            'joinTable' => 'formations_position_title_of_formations'
+            'targetForeignKey' => 'position_title_id',
+            'joinTable' => 'formations_position_titles'
         ]);
     }
 

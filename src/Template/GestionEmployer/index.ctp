@@ -27,21 +27,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('number') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('civility_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('language_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('cellular') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('position_title_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('building_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('supervisor_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('more_info') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('date_sent_formation_plan') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('actif') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+               
             </tr>
         </thead>
         <tbody>
@@ -70,14 +56,5 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+    
 </div>
