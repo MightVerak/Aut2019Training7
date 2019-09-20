@@ -42,10 +42,24 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </li>
         </ul>
         <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
+        <ul>
+            <li>
+            <?= $this->Html->link('Gestion Formation',['controller'=> 'GestionFormation','action' => 'index']) ?>
+            </li>
+            <li>
+            <?= $this->Html->link('Gestion Employer',['controller'=> 'GestionEmployer','action' => 'index']) ?>
+            </li>
+        </ul>
+
+            <div class="right">
+    <?php 
+        if ($this->Session->read('Auth.User')){
+        $user = $this->Session->read('Auth.User');
+        echo $this->Html->link($user['username'],['controller'=> 'Users','action' => 'edit', $user['id']],['class' => 'button', 'target' => '']);
+        echo $this->Html->link('Logout',['controller' => 'Users', 'action' => 'logout'],['class' => 'button', 'target' => '']);
+        }
+    ?>
+            </div>
         </div>
     </nav>
     <?= $this->Flash->render() ?>
