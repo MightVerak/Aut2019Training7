@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Sam 21 Septembre 2019 à 00:36
+-- Généré le :  Sam 21 Septembre 2019 à 01:53
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -109,7 +109,7 @@ CREATE TABLE `employees` (
   `last_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `language_id` int(255) NOT NULL,
-  `cellular` int(10) DEFAULT NULL,
+  `cellular` varchar(13) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `position_title_id` int(100) NOT NULL,
   `building_id` int(100) NOT NULL,
@@ -154,12 +154,13 @@ CREATE TABLE `formations` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `formations_position_title_of_formations`
+-- Structure de la table `formations_position_titles`
 --
 
-CREATE TABLE `formations_position_title_of_formations` (
+CREATE TABLE `formations_position_titles` (
   `formation_id` int(11) NOT NULL,
-  `position_title_of_formations_id` int(11) NOT NULL
+  `position_title_id` int(11) NOT NULL,
+  `formation_status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -183,6 +184,35 @@ INSERT INTO `formation_statuses` (`id`, `formation_status`) VALUES
 (3, 'Obligatoire si le risque est présent dans l\'immeuble ou si les taches de l\'employé l\'exigent'),
 (4, 'Recommandé'),
 (5, 'Selon le besoin (voir avec le département SST)');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `frequences`
+--
+
+CREATE TABLE `frequences` (
+  `id` int(11) NOT NULL,
+  `frequence` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `frequences`
+--
+
+INSERT INTO `frequences` (`id`, `frequence`) VALUES
+(1, '1 semaine'),
+(2, '1 mois'),
+(3, '3 mois'),
+(4, '6 mois'),
+(5, '18 mois'),
+(6, '1 an'),
+(7, '2 ans'),
+(8, '3 ans'),
+(9, '4 ans'),
+(10, '5 ans'),
+(11, 'Aux besoins'),
+(12, 'Une seul fois');
 
 -- --------------------------------------------------------
 
@@ -254,14 +284,31 @@ INSERT INTO `position_titles` (`id`, `position_title`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `position_title_of_formations`
+-- Structure de la table `start_reminders`
 --
 
-CREATE TABLE `position_title_of_formations` (
+CREATE TABLE `start_reminders` (
   `id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status_id` int(11) NOT NULL
+  `start_reminder` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `start_reminders`
+--
+
+INSERT INTO `start_reminders` (`id`, `start_reminder`) VALUES
+(1, '1 semaine'),
+(2, '1 mois'),
+(3, '3 mois'),
+(4, '6 mois'),
+(5, '18 mois'),
+(6, '1 an'),
+(7, '2 ans'),
+(8, '3 ans'),
+(9, '4 ans'),
+(10, '5 ans'),
+(11, 'Aux besoins'),
+(12, 'Une seul fois');
 
 -- --------------------------------------------------------
 
@@ -281,35 +328,6 @@ CREATE TABLE `supervisors` (
 INSERT INTO `supervisors` (`id`, `name`) VALUES
 (1, 'Évelyne Poincaré'),
 (2, 'Maxence Brunet');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `time_tables`
---
-
-CREATE TABLE `time_tables` (
-  `id` int(11) NOT NULL,
-  `time_select` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Contenu de la table `time_tables`
---
-
-INSERT INTO `time_tables` (`id`, `time_select`) VALUES
-(1, '1 semaine'),
-(2, '1 mois'),
-(3, '3 mois'),
-(4, '6 mois'),
-(5, '18 mois'),
-(6, '1 an'),
-(7, '2 ans'),
-(8, '3 ans'),
-(9, '4 ans'),
-(10, '5 ans'),
-(11, 'Aux besoins'),
-(12, 'Une seul fois');
 
 -- --------------------------------------------------------
 
@@ -391,16 +409,26 @@ ALTER TABLE `formations`
   ADD KEY `categorie_2` (`categorie_id`);
 
 --
--- Index pour la table `formations_position_title_of_formations`
+-- Index pour la table `formations_position_titles`
 --
-ALTER TABLE `formations_position_title_of_formations`
-  ADD KEY `position_title_of_formations_id` (`position_title_of_formations_id`),
-  ADD KEY `formation_id` (`formation_id`);
+ALTER TABLE `formations_position_titles`
+  ADD KEY `position_title_of_formations_id` (`position_title_id`),
+  ADD KEY `formation_id` (`formation_id`),
+  ADD KEY `status_id` (`formation_status_id`),
+  ADD KEY `formation_id_2` (`formation_id`),
+  ADD KEY `position_title_id` (`position_title_id`),
+  ADD KEY `formation_status_id` (`formation_status_id`);
 
 --
 -- Index pour la table `formation_statuses`
 --
 ALTER TABLE `formation_statuses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `frequences`
+--
+ALTER TABLE `frequences`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -422,22 +450,15 @@ ALTER TABLE `position_titles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `position_title_of_formations`
+-- Index pour la table `start_reminders`
 --
-ALTER TABLE `position_title_of_formations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status_id`);
+ALTER TABLE `start_reminders`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `supervisors`
 --
 ALTER TABLE `supervisors`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `time_tables`
---
-ALTER TABLE `time_tables`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -491,6 +512,11 @@ ALTER TABLE `formations`
 ALTER TABLE `formation_statuses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT pour la table `frequences`
+--
+ALTER TABLE `frequences`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
 -- AUTO_INCREMENT pour la table `languages`
 --
 ALTER TABLE `languages`
@@ -506,20 +532,15 @@ ALTER TABLE `modalities`
 ALTER TABLE `position_titles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT pour la table `position_title_of_formations`
+-- AUTO_INCREMENT pour la table `start_reminders`
 --
-ALTER TABLE `position_title_of_formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `start_reminders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `supervisors`
 --
 ALTER TABLE `supervisors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `time_tables`
---
-ALTER TABLE `time_tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
@@ -533,11 +554,11 @@ ALTER TABLE `users`
 -- Contraintes pour la table `employees`
 --
 ALTER TABLE `employees`
-  ADD CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`),
-  ADD CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`position_title_id`) REFERENCES `position_titles` (`id`),
-  ADD CONSTRAINT `employees_ibfk_3` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`),
-  ADD CONSTRAINT `employees_ibfk_4` FOREIGN KEY (`civility_id`) REFERENCES `civilities` (`id`),
-  ADD CONSTRAINT `employees_ibfk_5` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisors` (`id`);
+  ADD CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`position_title_id`) REFERENCES `position_titles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employees_ibfk_3` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employees_ibfk_4` FOREIGN KEY (`civility_id`) REFERENCES `civilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employees_ibfk_5` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `employee_formations`
@@ -550,17 +571,18 @@ ALTER TABLE `employee_formations`
 -- Contraintes pour la table `formations`
 --
 ALTER TABLE `formations`
-  ADD CONSTRAINT `formations_ibfk_1` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `formations_ibfk_2` FOREIGN KEY (`frequence_id`) REFERENCES `time_tables` (`id`),
-  ADD CONSTRAINT `formations_ibfk_3` FOREIGN KEY (`start_reminder_id`) REFERENCES `time_tables` (`id`),
-  ADD CONSTRAINT `formations_ibfk_4` FOREIGN KEY (`modality_id`) REFERENCES `modalities` (`id`);
+  ADD CONSTRAINT `formations_ibfk_1` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `formations_ibfk_2` FOREIGN KEY (`frequence_id`) REFERENCES `frequences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `formations_ibfk_4` FOREIGN KEY (`modality_id`) REFERENCES `modalities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `formations_ibfk_5` FOREIGN KEY (`start_reminder_id`) REFERENCES `start_reminders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `formations_position_title_of_formations`
+-- Contraintes pour la table `formations_position_titles`
 --
-ALTER TABLE `formations_position_title_of_formations`
-  ADD CONSTRAINT `formations_position_title_of_formations_ibfk_1` FOREIGN KEY (`position_title_of_formations_id`) REFERENCES `position_title_of_formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `formations_position_title_of_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`);
+ALTER TABLE `formations_position_titles`
+  ADD CONSTRAINT `formations_position_titles_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`),
+  ADD CONSTRAINT `formations_position_titles_ibfk_3` FOREIGN KEY (`formation_status_id`) REFERENCES `formation_statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `formations_position_titles_ibfk_4` FOREIGN KEY (`position_title_id`) REFERENCES `position_titles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
