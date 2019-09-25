@@ -21,6 +21,8 @@
         <li><?= $this->Html->link(__('New Modality'), ['controller' => 'Modalities', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Employee Formations'), ['controller' => 'EmployeeFormations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Employee Formation'), ['controller' => 'EmployeeFormations', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Position Titles'), ['controller' => 'PositionTitles', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Position Title'), ['controller' => 'PositionTitles', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="formations view large-9 medium-8 columns content">
@@ -63,6 +65,29 @@
             <td><?= $this->Number->format($formation->duration) ?></td>
         </tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Position Titles') ?></h4>
+        <?php if (!empty($formation->position_titles)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Position Title') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($formation->position_titles as $positionTitles): ?>
+            <tr>
+                <td><?= h($positionTitles->id) ?></td>
+                <td><?= h($positionTitles->position_title) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'PositionTitles', 'action' => 'view', $positionTitles->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'PositionTitles', 'action' => 'edit', $positionTitles->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'PositionTitles', 'action' => 'delete', $positionTitles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $positionTitles->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Employee Formations') ?></h4>
         <?php if (!empty($formation->employee_formations)): ?>

@@ -29,8 +29,7 @@ class FormationsTableTest extends TestCase
         'app.StartReminders',
         'app.Modalities',
         'app.EmployeeFormations',
-        'app.FormationsPositionTitleOfFormations',
-        'app.PositionTitleOfFormations'
+        'app.PositionTitles'
     ];
 
     /**

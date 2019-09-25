@@ -18,6 +18,8 @@
         <li><?= $this->Html->link(__('New Modality'), ['controller' => 'Modalities', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Employee Formations'), ['controller' => 'EmployeeFormations', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Employee Formation'), ['controller' => 'EmployeeFormations', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Position Titles'), ['controller' => 'PositionTitles', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Position Title'), ['controller' => 'PositionTitles', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="formations form large-9 medium-8 columns content">
@@ -33,6 +35,7 @@
             echo $this->Form->control('modality_id', ['options' => $modalities]);
             echo $this->Form->control('duration');
             echo $this->Form->control('note');
+            echo $this->Form->control('position_titles._ids', ['options' => $positionTitles]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

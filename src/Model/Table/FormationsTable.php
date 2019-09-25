@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\StartRemindersTable&\Cake\ORM\Association\BelongsTo $StartReminders
  * @property \App\Model\Table\ModalitiesTable&\Cake\ORM\Association\BelongsTo $Modalities
  * @property \App\Model\Table\EmployeeFormationsTable&\Cake\ORM\Association\HasMany $EmployeeFormations
- * @property &\Cake\ORM\Association\BelongsToMany $PositionTitles
+ * @property \App\Model\Table\PositionTitlesTable&\Cake\ORM\Association\BelongsToMany $PositionTitles
  *
  * @method \App\Model\Entity\Formation get($primaryKey, $options = [])
  * @method \App\Model\Entity\Formation newEntity($data = null, array $options = [])
