@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $position_title
  *
  * @property \App\Model\Entity\Employee[] $employees
+ * @property \App\Model\Entity\Formation[] $formations
  */
 class PositionTitle extends Entity
 {
@@ -24,6 +25,7 @@ class PositionTitle extends Entity
      */
     protected $_accessible = [
         'position_title' => true,
-        'employees' => true
+        'employees' => true,
+        'formations' => true
     ];
 }

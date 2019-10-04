@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Ven 04 Octobre 2019 à 21:10
+-- Généré le :  Ven 04 Octobre 2019 à 22:45
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -119,6 +119,13 @@ CREATE TABLE `employees` (
   `actif` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Contenu de la table `employees`
+--
+
+INSERT INTO `employees` (`id`, `number`, `civility_id`, `last_name`, `first_name`, `language_id`, `cellular`, `email`, `position_title_id`, `building_id`, `supervisor_id`, `more_info`, `date_sent_formation_plan`, `actif`) VALUES
+(1, 'a4s5d7rt89', 1, 'user', 'user', 1, '5141111111', 'user@user.com', 1, 1, 1, '', NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -150,6 +157,13 @@ CREATE TABLE `formations` (
   `duration` decimal(10,0) NOT NULL,
   `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `formations`
+--
+
+INSERT INTO `formations` (`id`, `number`, `title`, `categorie_id`, `frequence_id`, `start_reminder_id`, `modality_id`, `duration`, `note`) VALUES
+(2, 'fasf3', 'asfa', 1, 1, 1, 1, '3', '');
 
 -- --------------------------------------------------------
 
@@ -503,7 +517,7 @@ ALTER TABLE `civilities`
 -- AUTO_INCREMENT pour la table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `employee_formations`
 --
@@ -513,7 +527,7 @@ ALTER TABLE `employee_formations`
 -- AUTO_INCREMENT pour la table `formations`
 --
 ALTER TABLE `formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `formations_position_titles`
 --

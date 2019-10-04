@@ -21,7 +21,9 @@ class PositionTitlesControllerTest extends TestCase
      */
     public $fixtures = [
         'app.PositionTitles',
-        'app.Employees'
+        'app.Employees',
+        'app.Formations',
+        'app.FormationsPositionTitles'
     ];
 
     /**
