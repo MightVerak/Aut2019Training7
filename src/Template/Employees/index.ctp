@@ -35,7 +35,7 @@
             <?php foreach ($employees as $employee): ?>
             <tr>
                 <td><?= h($employee->number) ?></td>
-                <td><?= $employee->has('civility') ? $this->Html->link($employee->civility->id, ['controller' => 'Civilities', 'action' => 'view', $employee->civility->id]) : '' ?></td>
+                <td><?= $employee->has('civility') ? $this->Html->link($employee->civility->civility, ['controller' => 'Civilities', 'action' => 'view', $employee->civility->id]) : '' ?></td>
                 <td><?= h($employee->last_name) ?></td>
                 <td><?= h($employee->first_name) ?></td>
                 <td><?= $employee->has('language') ? $this->Html->link($employee->language->id, ['controller' => 'Languages', 'action' => 'view', $employee->language->id]) : '' ?></td>
