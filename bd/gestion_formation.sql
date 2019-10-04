@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Sam 21 Septembre 2019 à 01:53
+-- Généré le :  Ven 04 Octobre 2019 à 21:10
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -158,6 +158,7 @@ CREATE TABLE `formations` (
 --
 
 CREATE TABLE `formations_position_titles` (
+  `id` int(11) NOT NULL,
   `formation_id` int(11) NOT NULL,
   `position_title_id` int(11) NOT NULL,
   `formation_status_id` int(11) NOT NULL
@@ -406,18 +407,25 @@ ALTER TABLE `formations`
   ADD KEY `frequence` (`frequence_id`),
   ADD KEY `start_reminder` (`start_reminder_id`),
   ADD KEY `modality` (`modality_id`),
-  ADD KEY `categorie_2` (`categorie_id`);
+  ADD KEY `categorie_2` (`categorie_id`),
+  ADD KEY `frequence_id` (`frequence_id`),
+  ADD KEY `categorie_id` (`categorie_id`),
+  ADD KEY `modality_id` (`modality_id`),
+  ADD KEY `start_reminder_id` (`start_reminder_id`);
 
 --
 -- Index pour la table `formations_position_titles`
 --
 ALTER TABLE `formations_position_titles`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `position_title_of_formations_id` (`position_title_id`),
   ADD KEY `formation_id` (`formation_id`),
   ADD KEY `status_id` (`formation_status_id`),
   ADD KEY `formation_id_2` (`formation_id`),
   ADD KEY `position_title_id` (`position_title_id`),
-  ADD KEY `formation_status_id` (`formation_status_id`);
+  ADD KEY `formation_status_id` (`formation_status_id`),
+  ADD KEY `position_title_id_2` (`position_title_id`),
+  ADD KEY `formation_status_id_2` (`formation_status_id`);
 
 --
 -- Index pour la table `formation_statuses`
@@ -505,6 +513,11 @@ ALTER TABLE `employee_formations`
 -- AUTO_INCREMENT pour la table `formations`
 --
 ALTER TABLE `formations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `formations_position_titles`
+--
+ALTER TABLE `formations_position_titles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `formation_statuses`
