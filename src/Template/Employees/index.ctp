@@ -35,18 +35,18 @@
             <?php foreach ($employees as $employee): ?>
             <tr>
                 <td><?= h($employee->number) ?></td>
-                <td><?= $employee->has('civility') ? $this->Html->link($employee->civility->civility, ['controller' => 'Civilities', 'action' => 'view', $employee->civility->id]) : '' ?></td>
+                <td><?= h($employee->civility->civility) ?></td>
                 <td><?= h($employee->last_name) ?></td>
                 <td><?= h($employee->first_name) ?></td>
-                <td><?= $employee->has('language') ? $this->Html->link($employee->language->id, ['controller' => 'Languages', 'action' => 'view', $employee->language->id]) : '' ?></td>
-                <td><?= $this->Number->format($employee->cellular) ?></td>
+                <td><?= h($employee->language->language) ?></td>
+                <td><?= h($employee->cellular) ?></td>
                 <td><?= h($employee->email) ?></td>
-                <td><?= $employee->has('position_title') ? $this->Html->link($employee->position_title->id, ['controller' => 'PositionTitles', 'action' => 'view', $employee->position_title->id]) : '' ?></td>
-                <td><?= $employee->has('building') ? $this->Html->link($employee->building->id, ['controller' => 'Buildings', 'action' => 'view', $employee->building->id]) : '' ?></td>
-                <td><?= $employee->has('supervisor') ? $this->Html->link($employee->supervisor->name, ['controller' => 'Supervisors', 'action' => 'view', $employee->supervisor->id]) : '' ?></td>
+                <td><?= h($employee->position_title->position_title) ?></td>
+                <td><?= h( $employee->building->building) ?></td>
+                <td><?= h( $employee->supervisor->name) ?></td>
                 <td><?= h($employee->more_info) ?></td>
                 <td><?= h($employee->date_sent_formation_plan) ?></td>
-                <td><?= h($employee->actif) ?></td>
+                <td><?= $employee->actif ? __('Yes') : __('No'); ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $employee->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $employee->id]) ?>

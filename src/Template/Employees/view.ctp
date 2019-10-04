@@ -15,7 +15,7 @@
     </ul>
 </nav>
 <div class="employees view large-9 medium-8 columns content">
-    <h3><?= h($employee->id) ?></h3>
+    <h3><?= h($employee->number) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Number') ?></th>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Civility') ?></th>
-            <td><?= $employee->has('civility') ? $this->Html->link($employee->civility->id, ['controller' => 'Civilities', 'action' => 'view', $employee->civility->id]) : '' ?></td>
+            <td><?= h($employee->civility->civility) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Last Name') ?></th>
@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Language') ?></th>
-            <td><?= $employee->has('language') ? $this->Html->link($employee->language->id, ['controller' => 'Languages', 'action' => 'view', $employee->language->id]) : '' ?></td>
+            <td><?= h($employee->language->language) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>
@@ -43,15 +43,15 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Position Title') ?></th>
-            <td><?= $employee->has('position_title') ? $this->Html->link($employee->position_title->id, ['controller' => 'PositionTitles', 'action' => 'view', $employee->position_title->id]) : '' ?></td>
+            <td><?= h($employee->position_title->position_title) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Building') ?></th>
-            <td><?= $employee->has('building') ? $this->Html->link($employee->building->id, ['controller' => 'Buildings', 'action' => 'view', $employee->building->id]) : '' ?></td>
+            <td><?= h( $employee->building->building) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Supervisor') ?></th>
-            <td><?= $employee->has('supervisor') ? $this->Html->link($employee->supervisor->name, ['controller' => 'Supervisors', 'action' => 'view', $employee->supervisor->id]) : '' ?></td>
+            <td><?= h( $employee->supervisor->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('More Info') ?></th>
@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Cellular') ?></th>
-            <td><?= $this->Number->format($employee->cellular) ?></td>
+            <td><?= h($employee->cellular) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Date Sent Formation Plan') ?></th>
@@ -75,20 +75,16 @@
         <?php if (!empty($employee->employee_formations)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Date Done') ?></th>
                 <th scope="col"><?= __('Note') ?></th>
-                <th scope="col"><?= __('Employee Id') ?></th>
-                <th scope="col"><?= __('Formation Id') ?></th>
+                <th scope="col"><?= __('Formation') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($employee->employee_formations as $employeeFormations): ?>
             <tr>
-                <td><?= h($employeeFormations->id) ?></td>
                 <td><?= h($employeeFormations->date_done) ?></td>
                 <td><?= h($employeeFormations->note) ?></td>
-                <td><?= h($employeeFormations->employee_id) ?></td>
-                <td><?= h($employeeFormations->formation_id) ?></td>
+                <td><?= h($employeeFormations->formation_title) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'EmployeeFormations', 'action' => 'view', $employeeFormations->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'EmployeeFormations', 'action' => 'edit', $employeeFormations->id]) ?>
