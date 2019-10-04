@@ -55,7 +55,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?php 
         if ($this->Session->read('Auth.User')){
         $user = $this->Session->read('Auth.User');
-        echo $this->Html->link($user['username'],['controller'=> 'Users','action' => 'edit', $user['id']],['class' => 'button', 'target' => '']);
+        echo $this->Html->link($user['username'],['controller'=> 'home','action' => 'index', $user['id']],['class' => 'button', 'target' => '']);
         echo $this->Html->link('Logout',['controller' => 'Users', 'action' => 'logout'],['class' => 'button', 'target' => '']);
         }
     ?>
