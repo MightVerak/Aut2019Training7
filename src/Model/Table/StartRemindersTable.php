@@ -33,7 +33,7 @@ class StartRemindersTable extends Table
         parent::initialize($config);
 
         $this->setTable('start_reminders');
-        $this->setDisplayField('id');
+        $this->setDisplayField('start_reminder');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Formations', [
