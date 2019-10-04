@@ -10,6 +10,8 @@
         <li><?= $this->Html->link(__('New Position Title'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Employees'), ['controller' => 'Employees', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Employee'), ['controller' => 'Employees', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Formations'), ['controller' => 'Formations', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Formation'), ['controller' => 'Formations', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="positionTitles index large-9 medium-8 columns content">

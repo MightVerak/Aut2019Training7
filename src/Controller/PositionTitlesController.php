@@ -34,7 +34,7 @@ class PositionTitlesController extends AppController
     public function view($id = null)
     {
         $positionTitle = $this->PositionTitles->get($id, [
-            'contain' => ['Employees']
+            'contain' => ['Formations', 'Employees']
         ]);
 
         $this->set('positionTitle', $positionTitle);
@@ -57,7 +57,8 @@ class PositionTitlesController extends AppController
             }
             $this->Flash->error(__('The position title could not be saved. Please, try again.'));
         }
-        $this->set(compact('positionTitle'));
+        $formations = $this->PositionTitles->Formations->find('list', ['limit' => 200]);
+        $this->set(compact('positionTitle', 'formations'));
     }
 
     /**
@@ -70,7 +71,7 @@ class PositionTitlesController extends AppController
     public function edit($id = null)
     {
         $positionTitle = $this->PositionTitles->get($id, [
-            'contain' => []
+            'contain' => ['Formations']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $positionTitle = $this->PositionTitles->patchEntity($positionTitle, $this->request->getData());
@@ -81,7 +82,8 @@ class PositionTitlesController extends AppController
             }
             $this->Flash->error(__('The position title could not be saved. Please, try again.'));
         }
-        $this->set(compact('positionTitle'));
+        $formations = $this->PositionTitles->Formations->find('list', ['limit' => 200]);
+        $this->set(compact('positionTitle', 'formations'));
     }
 
     /**

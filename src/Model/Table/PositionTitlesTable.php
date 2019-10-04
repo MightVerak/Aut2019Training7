@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
  * PositionTitles Model
  *
  * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\HasMany $Employees
- * @property &\Cake\ORM\Association\BelongsToMany $Formations
+ * @property \App\Model\Table\FormationsTable&\Cake\ORM\Association\BelongsToMany $Formations
  *
  * @method \App\Model\Entity\PositionTitle get($primaryKey, $options = [])
  * @method \App\Model\Entity\PositionTitle newEntity($data = null, array $options = [])

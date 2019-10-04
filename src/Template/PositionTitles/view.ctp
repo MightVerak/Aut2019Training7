@@ -13,6 +13,8 @@
         <li><?= $this->Html->link(__('New Position Title'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Employees'), ['controller' => 'Employees', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Employee'), ['controller' => 'Employees', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Formations'), ['controller' => 'Formations', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Formation'), ['controller' => 'Formations', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="positionTitles view large-9 medium-8 columns content">
@@ -27,6 +29,43 @@
             <td><?= $this->Number->format($positionTitle->id) ?></td>
         </tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Formations') ?></h4>
+        <?php if (!empty($positionTitle->formations)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Number') ?></th>
+                <th scope="col"><?= __('Title') ?></th>
+                <th scope="col"><?= __('Categorie Id') ?></th>
+                <th scope="col"><?= __('Frequence Id') ?></th>
+                <th scope="col"><?= __('Start Reminder Id') ?></th>
+                <th scope="col"><?= __('Modality Id') ?></th>
+                <th scope="col"><?= __('Duration') ?></th>
+                <th scope="col"><?= __('Note') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($positionTitle->formations as $formations): ?>
+            <tr>
+                <td><?= h($formations->id) ?></td>
+                <td><?= h($formations->number) ?></td>
+                <td><?= h($formations->title) ?></td>
+                <td><?= h($formations->categorie_id) ?></td>
+                <td><?= h($formations->frequence_id) ?></td>
+                <td><?= h($formations->start_reminder_id) ?></td>
+                <td><?= h($formations->modality_id) ?></td>
+                <td><?= h($formations->duration) ?></td>
+                <td><?= h($formations->note) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Formations', 'action' => 'view', $formations->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Formations', 'action' => 'edit', $formations->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Formations', 'action' => 'delete', $formations->id], ['confirm' => __('Are you sure you want to delete # {0}?', $formations->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Employees') ?></h4>
         <?php if (!empty($positionTitle->employees)): ?>
