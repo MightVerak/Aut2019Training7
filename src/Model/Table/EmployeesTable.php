@@ -97,8 +97,14 @@ class EmployeesTable extends Table
             ->notEmptyString('first_name');
 
         $validator
-            ->integer('cellular')
-            ->allowEmptyString('cellular');
+            
+            ->allowEmptyString('cellular')
+            ->add('cellular', 'isValidUSPhoneFormat', [
+                'rule' => 'isValidUSPhoneFormat',
+                'provider' => 'table',
+            ]);
+
+        
 
         $validator
             ->email('email')
@@ -109,6 +115,7 @@ class EmployeesTable extends Table
             ->scalar('more_info')
             ->maxLength('more_info', 255)
             ->allowEmptyString('more_info');
+
 
         $validator
             ->date('date_sent_formation_plan')
@@ -139,4 +146,22 @@ class EmployeesTable extends Table
 
         return $rules;
     }
+
+    public function isValidUSPhoneFormat($check, array $context){
+        
+        $phone_no=$check;
+
+        $errors = array();
+           if(empty($phone_no)) {
+               $errors [] = "Please enter Phone Number";
+           }
+           else if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phone_no)) {
+               $errors [] = "Please enter valid Phone Number";
+           } 
+       
+           if (!empty($errors))
+           return implode("\n", $errors);
+       
+           return true;
+       }
 }
