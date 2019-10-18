@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Ven 04 Octobre 2019 à 22:45
+-- Généré le :  Sam 19 Octobre 2019 à 00:02
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -140,6 +140,13 @@ CREATE TABLE `employee_formations` (
   `formation_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Contenu de la table `employee_formations`
+--
+
+INSERT INTO `employee_formations` (`id`, `date_done`, `note`, `employee_id`, `formation_id`) VALUES
+(1, NULL, 'cacaca', 1, 10);
+
 -- --------------------------------------------------------
 
 --
@@ -163,7 +170,9 @@ CREATE TABLE `formations` (
 --
 
 INSERT INTO `formations` (`id`, `number`, `title`, `categorie_id`, `frequence_id`, `start_reminder_id`, `modality_id`, `duration`, `note`) VALUES
-(2, 'fasf3', 'asfa', 1, 1, 1, 1, '3', '');
+(2, 'fasf3', 'asfa', 1, 1, 1, 1, '3', ''),
+(8, 'shgszh', '626h', 1, 1, 1, 1, '4', ''),
+(10, '6236236', 'zdhsdhsh', 1, 1, 1, 1, '6463463473', '');
 
 -- --------------------------------------------------------
 
@@ -517,17 +526,17 @@ ALTER TABLE `civilities`
 -- AUTO_INCREMENT pour la table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `employee_formations`
 --
 ALTER TABLE `employee_formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `formations`
 --
 ALTER TABLE `formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `formations_position_titles`
 --
@@ -591,8 +600,8 @@ ALTER TABLE `employees`
 -- Contraintes pour la table `employee_formations`
 --
 ALTER TABLE `employee_formations`
-  ADD CONSTRAINT `employee_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`),
-  ADD CONSTRAINT `employee_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`);
+  ADD CONSTRAINT `employee_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `formations`
@@ -607,7 +616,7 @@ ALTER TABLE `formations`
 -- Contraintes pour la table `formations_position_titles`
 --
 ALTER TABLE `formations_position_titles`
-  ADD CONSTRAINT `formations_position_titles_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`),
+  ADD CONSTRAINT `formations_position_titles_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `formations_position_titles_ibfk_3` FOREIGN KEY (`formation_status_id`) REFERENCES `formation_statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `formations_position_titles_ibfk_4` FOREIGN KEY (`position_title_id`) REFERENCES `position_titles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
