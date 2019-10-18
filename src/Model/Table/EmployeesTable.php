@@ -153,10 +153,10 @@ class EmployeesTable extends Table
 
         $errors = array();
            if(empty($phone_no)) {
-               $errors [] = "Please enter Phone Number";
+               $errors [] = "Please enter Phone Number format (xxx-xxx-xxxx)";
            }
            else if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phone_no)) {
-               $errors [] = "Please enter valid Phone Number";
+               $errors [] = "Please enter valid Phone Number format (xxx-xxx-xxxx)";
            } 
        
            if (!empty($errors))
