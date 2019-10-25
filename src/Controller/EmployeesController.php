@@ -52,7 +52,14 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->newEntity();
         if ($this->request->is('post')) {
+
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+
+            $phoneNumber = $employee['cellular'];
+            if(!$this->isvalidNumber($phoneNumber)){
+                $employee['cellular'] = $this->formatPhone($phoneNumber);
+            }
+
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
@@ -66,6 +73,24 @@ class EmployeesController extends AppController
         $buildings = $this->Employees->Buildings->find('list', ['limit' => 200]);
         $supervisors = $this->Employees->Supervisors->find('list', ['limit' => 200]);
         $this->set(compact('employee', 'civilities', 'languages', 'positionTitles', 'buildings', 'supervisors'));
+    }
+
+    public static function isvalidNumber($number){
+        if (strlen($number) == 12){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function formatPhone($number){
+        $formated = substr($number,0,3);
+        $formated = $formated."-";
+        $formated = $formated.substr($number,3,3);
+        $formated = $formated."-";
+        $formated = $formated.substr($number,6,4);
+
+        return $formated;
     }
 
     /**

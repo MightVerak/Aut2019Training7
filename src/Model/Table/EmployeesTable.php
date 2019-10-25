@@ -155,7 +155,7 @@ class EmployeesTable extends Table
            if(empty($phone_no)) {
                $errors [] = "Please enter Phone Number format (xxx-xxx-xxxx)";
            }
-           else if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phone_no)) {
+           else if (!preg_match("/^[0-9]{3}-?[0-9]{3}-?[0-9]{4}$/", $phone_no)) {
                $errors [] = "Please enter valid Phone Number format (xxx-xxx-xxxx)";
            } 
        
