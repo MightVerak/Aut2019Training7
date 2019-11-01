@@ -37,7 +37,7 @@ class FormationsController extends AppController
     public function view($id = null)
     {
         $formation = $this->Formations->get($id, [
-            'contain' => ['Categories', 'Frequences', 'StartReminders', 'Modalities', 'PositionTitles', 'EmployeeFormations']
+            'contain' => ['Categories', 'Frequences', 'StartReminders', 'Modalities', 'PositionTitles', 'Employees']
         ]);
 
         $this->set('formation', $formation);

@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Modality Entity
  *
  * @property int $id
- * @property int $modality
+ * @property string $modality
  *
  * @property \App\Model\Entity\Formation[] $formations
  */

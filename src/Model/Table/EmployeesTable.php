@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\PositionTitlesTable&\Cake\ORM\Association\BelongsTo $PositionTitles
  * @property \App\Model\Table\BuildingsTable&\Cake\ORM\Association\BelongsTo $Buildings
  * @property \App\Model\Table\SupervisorsTable&\Cake\ORM\Association\BelongsTo $Supervisors
- * @property \App\Model\Table\EmployeeFormationsTable&\Cake\ORM\Association\HasMany $EmployeeFormations
+ * @property \App\Model\Table\FormationsTable&\Cake\ORM\Association\BelongsToMany $Formations
  *
  * @method \App\Model\Entity\Employee get($primaryKey, $options = [])
  * @method \App\Model\Entity\Employee newEntity($data = null, array $options = [])
@@ -61,8 +61,10 @@ class EmployeesTable extends Table
             'foreignKey' => 'supervisor_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('EmployeeFormations', [
-            'foreignKey' => 'employee_id'
+        $this->belongsToMany('Formations', [
+            'foreignKey' => 'employee_id',
+            'targetForeignKey' => 'formation_id',
+            'joinTable' => 'employees_formations'
         ]);
     }
 
@@ -97,14 +99,11 @@ class EmployeesTable extends Table
             ->notEmptyString('first_name');
 
         $validator
-            
-            ->allowEmptyString('cellular')
-            ->add('cellular', 'isValidUSPhoneFormat', [
-                'rule' => 'isValidUSPhoneFormat',
-                'provider' => 'table',
-            ]);
-
-        
+        ->allowEmptyString('cellular')
+        ->add('cellular', 'isValidUSPhoneFormat', [
+            'rule' => 'isValidUSPhoneFormat',
+            'provider' => 'table',
+        ]);
 
         $validator
             ->email('email')
@@ -115,7 +114,6 @@ class EmployeesTable extends Table
             ->scalar('more_info')
             ->maxLength('more_info', 255)
             ->allowEmptyString('more_info');
-
 
         $validator
             ->date('date_sent_formation_plan')
@@ -146,7 +144,6 @@ class EmployeesTable extends Table
 
         return $rules;
     }
-
     public function isValidUSPhoneFormat($check, array $context){
         
         $phone_no=$check;
