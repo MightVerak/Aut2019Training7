@@ -110,4 +110,13 @@ class EmployeesFormationsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function formation($id = null)
+    {
+        $employee = $this->Employees->get($id, [
+            'contain' => ['Civilities', 'PositionTitles', 'Buildings', 'Supervisors', 'EmployeeFormations']
+        ]);
+
+        $this->set('employee', $employee);
+    }
 }
