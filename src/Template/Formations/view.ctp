@@ -27,19 +27,19 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Category') ?></th>
-            <td><?= $formation->has('category') ? $this->Html->link($formation->category->name, ['controller' => 'Categories', 'action' => 'view', $formation->category->id]) : '' ?></td>
+            <td><?= h($formation->category->name)?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Frequence') ?></th>
-            <td><?= $formation->has('frequence') ? $this->Html->link($formation->frequence->frequence, ['controller' => 'Frequences', 'action' => 'view', $formation->frequence->id]) : '' ?></td>
+            <td><?= h($formation->frequence->frequence)?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Start Reminder') ?></th>
-            <td><?= $formation->has('start_reminder') ? $this->Html->link($formation->start_reminder->start_reminder, ['controller' => 'StartReminders', 'action' => 'view', $formation->start_reminder->id]) : '' ?></td>
+            <td><?= h($formation->start_reminder->start_reminder) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Modality') ?></th>
-            <td><?= $formation->has('modality') ? $this->Html->link($formation->modality->modality, ['controller' => 'Modalities', 'action' => 'view', $formation->modality->id]) : '' ?></td>
+            <td><?= h($formation->modality->modality) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Note') ?></th>
