@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
-namespace Cake\Mailer\Email;
 
+use Cake\Mailer\Email;
 use App\Controller\AppController;
 
 /**
