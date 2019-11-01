@@ -69,12 +69,15 @@ ob_start();
         <?php endif; ?>
     </div>
 </div>
-<?php;
+<?php
 $page = ob_get_contents();
 ob_end_flush();
 $adress = $employee->email; 
+$array = ["adress" => $adress,"page" => $page,];
 ?>
-
-<?=$this->Html->link(__('Envoyee'), ['controller' => 'Employees','action' => 'mailPage', $array = ["adress" => $adress,"employee" => $page,]])?>
+<?php echo $this->Form->create('Send', array('action'=>'mailPage'));
+        echo $this->Form->hidden('data', $array);
+        echo$this->Form->button(__('Submit'));
+        echo $this->Form->end(); ?>
 
 
