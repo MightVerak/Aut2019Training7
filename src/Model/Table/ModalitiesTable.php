@@ -54,7 +54,8 @@ class ModalitiesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('modality')
+            ->scalar('modality')
+            ->maxLength('modality', 255)
             ->requirePresence('modality', 'create')
             ->notEmptyString('modality');
 

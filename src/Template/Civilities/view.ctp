@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="civilities view large-9 medium-8 columns content">
-    <h3><?= h($civility->id) ?></h3>
+    <h3><?= h($civility->civility) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Civility') ?></th>

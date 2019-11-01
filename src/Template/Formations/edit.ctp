@@ -13,8 +13,7 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $formation->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Formations'), ['action' => 'index']) ?></li>
-        
+   <li><?= $this->Html->link(__('List Formations'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="formations form large-9 medium-8 columns content">
@@ -30,7 +29,8 @@
             echo $this->Form->control('modality_id', ['options' => $modalities]);
             echo $this->Form->control('duration');
             echo $this->Form->control('note');
-            echo $this->Form->control('position_titles_id', ['options' => $positionTitles]);
+            echo $this->Form->control('employees._ids', ['options' => $employees]);
+            echo $this->Form->control('position_titles._ids', ['options' => $positionTitles]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

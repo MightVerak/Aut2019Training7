@@ -4,15 +4,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * User Entity
+ * EmployeesFormation Entity
  *
  * @property int $id
- * @property string $username
- * @property string $password
- * @property string $email
- * @property int $admin
+ * @property \Cake\I18n\FrozenDate|null $date_done
+ * @property string|null $note
+ * @property int $employee_id
+ * @property int $formation_id
+ *
+ * @property \App\Model\Entity\Employee $employee
+ * @property \App\Model\Entity\Formation $formation
  */
-class User extends Entity
+class EmployeesFormation extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -24,18 +27,11 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'username' => true,
-        'password' => true,
-        'email' => true,
-        'admin' => true
-    ];
-
-    /**
-     * Fields that are excluded from JSON versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [
-        'password'
+        'date_done' => true,
+        'note' => true,
+        'employee_id' => true,
+        'formation_id' => true,
+        'employee' => true,
+        'formation' => true
     ];
 }

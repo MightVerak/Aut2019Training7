@@ -26,7 +26,7 @@
             <?php foreach ($modalities as $modality): ?>
             <tr>
                 <td><?= $this->Number->format($modality->id) ?></td>
-                <td><?= $this->Number->format($modality->modality) ?></td>
+                <td><?= h($modality->modality) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $modality->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $modality->id]) ?>

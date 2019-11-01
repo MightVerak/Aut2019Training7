@@ -23,7 +23,8 @@
             echo $this->Form->control('modality_id', ['options' => $modalities]);
             echo $this->Form->control('duration');
             echo $this->Form->control('note');
-            echo $this->Form->control('position_titles_id', ['options' => $positionTitles]);
+            echo $this->Form->control('employees._ids', ['options' => $employees]);
+            echo $this->Form->control('position_titles._ids', ['options' => $positionTitles]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

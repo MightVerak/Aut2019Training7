@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\FrequencesTable&\Cake\ORM\Association\BelongsTo $Frequences
  * @property \App\Model\Table\StartRemindersTable&\Cake\ORM\Association\BelongsTo $StartReminders
  * @property \App\Model\Table\ModalitiesTable&\Cake\ORM\Association\BelongsTo $Modalities
- * @property \App\Model\Table\EmployeeFormationsTable&\Cake\ORM\Association\HasMany $EmployeeFormations
+ * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\BelongsToMany $Employees
  * @property \App\Model\Table\PositionTitlesTable&\Cake\ORM\Association\BelongsToMany $PositionTitles
  *
  * @method \App\Model\Entity\Formation get($primaryKey, $options = [])
@@ -57,8 +57,10 @@ class FormationsTable extends Table
             'foreignKey' => 'modality_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('EmployeeFormations', [
-            'foreignKey' => 'formation_id'
+        $this->belongsToMany('Employees', [
+            'foreignKey' => 'formation_id',
+            'targetForeignKey' => 'employee_id',
+            'joinTable' => 'employees_formations'
         ]);
         $this->belongsToMany('PositionTitles', [
             'foreignKey' => 'formation_id',

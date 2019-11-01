@@ -15,6 +15,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('number') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('civility_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
@@ -34,7 +35,7 @@
         <tbody>
             <?php foreach ($employees as $employee): ?>
             <tr>
-                <td><?= h($employee->number) ?></td>
+            <td><?= h($employee->number) ?></td>
                 <td><?= h($employee->civility->civility) ?></td>
                 <td><?= h($employee->last_name) ?></td>
                 <td><?= h($employee->first_name) ?></td>

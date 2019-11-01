@@ -15,7 +15,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('number') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('number') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('categorie_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('frequence_id') ?></th>
@@ -29,13 +29,13 @@
         <tbody>
             <?php foreach ($formations as $formation): ?>
             <tr>
+          
                 <td><?= h($formation->number) ?></td>
                 <td><?= h($formation->title) ?></td>
                 <td><?= h($formation->category->name) ?></td>
                 <td><?= h($formation->frequence->frequence) ?></td>
                 <td><?= h($formation->start_reminder->start_reminder) ?></td>
                 <td><?= h($formation->modality->modality) ?></td>
-                
                 <td><?= $this->Number->format($formation->duration) ?></td>
                 <td><?= h($formation->note) ?></td>
                 <td class="actions">
