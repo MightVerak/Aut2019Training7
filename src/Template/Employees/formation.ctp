@@ -4,6 +4,9 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Employee $employee
  */
+
+ $page = null;
+ob_start();
 ?>
 
 <img></img>
@@ -66,5 +69,12 @@
         <?php endif; ?>
     </div>
 </div>
+<?php;
+$page = ob_get_contents();
+ob_end_flush();
+$adress = $employee->email; 
+?>
+
+<?=$this->Html->link(__('Envoyee'), ['controller' => 'Employees','action' => 'mailPage', $array = ["adress" => $adress,"employee" => $page,]])?>
 
 
