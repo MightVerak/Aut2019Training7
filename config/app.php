@@ -212,8 +212,8 @@ return [
             'host' => 'localhost',
             'port' => 25,
             'timeout' => 30,
-            'username' => null,
-            'password' => null,
+            'username' => 'planformation',
+            'password' => 'Louis Bouchard',
             'client' => null,
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
@@ -232,7 +232,8 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            'from' => '
+            planformation@localhost',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],

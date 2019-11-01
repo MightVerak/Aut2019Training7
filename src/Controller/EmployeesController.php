@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+namespace Cake\Mailer\Email;
 
 use App\Controller\AppController;
 
@@ -156,4 +157,10 @@ class EmployeesController extends AppController
         $this->set('employee', $employee);
     }
     
+    public function mailPage($adress, $Page){
+        $email = new Email('default');
+        $email->to($adress)->subject('Plan de formation')->send($Page);
+        $this->Flash->success(__('A confirmation Email has been sent to '. $adress));   
+        return true;
+  }
 }
