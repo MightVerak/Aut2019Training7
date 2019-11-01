@@ -16,15 +16,15 @@
     </ul>
 </nav>
 <div class="modalities view large-9 medium-8 columns content">
-    <h3><?= h($modality->modality) ?></h3>
+    <h3><?= h($modality->id) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Modality') ?></th>
-            <td><?= h($modality->modality) ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($modality->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Modality') ?></th>
+            <td><?= $this->Number->format($modality->modality) ?></td>
         </tr>
     </table>
     <div class="related">

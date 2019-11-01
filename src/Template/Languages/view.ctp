@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="languages view large-9 medium-8 columns content">
-    <h3><?= h($language->language) ?></h3>
+    <h3><?= h($language->id) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Language') ?></th>

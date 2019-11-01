@@ -27,9 +27,7 @@
             echo $this->Form->control('building_id', ['options' => $buildings]);
             echo $this->Form->control('supervisor_id', ['options' => $supervisors]);
             echo $this->Form->control('more_info');
-            echo $this->Form->control('date_sent_formation_plan', ['empty' => true]);
             echo $this->Form->control('actif');
-            echo $this->Form->control('formations._ids', ['options' => $formations]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

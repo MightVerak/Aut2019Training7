@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $last_name
  * @property string $first_name
  * @property int $language_id
- * @property string|null $cellular
+ * @property int|null $cellular
  * @property string $email
  * @property int $position_title_id
  * @property int $building_id
@@ -26,7 +26,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\PositionTitle $position_title
  * @property \App\Model\Entity\Building $building
  * @property \App\Model\Entity\Supervisor $supervisor
- * @property \App\Model\Entity\Formation[] $formations
+ * @property \App\Model\Entity\EmployeeFormation[] $employee_formations
  */
 class Employee extends Entity
 {
@@ -58,6 +58,6 @@ class Employee extends Entity
         'position_title' => true,
         'building' => true,
         'supervisor' => true,
-        'formations' => true
+        'employee_formations' => true
     ];
 }

@@ -20,7 +20,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Frequence $frequence
  * @property \App\Model\Entity\StartReminder $start_reminder
  * @property \App\Model\Entity\Modality $modality
- * @property \App\Model\Entity\Employee[] $employees
+ * @property \App\Model\Entity\EmployeeFormation[] $employee_formations
  * @property \App\Model\Entity\PositionTitle[] $position_titles
  */
 class Formation extends Entity
@@ -47,7 +47,7 @@ class Formation extends Entity
         'frequence' => true,
         'start_reminder' => true,
         'modality' => true,
-        'employees' => true,
+        'employee_formations' => true,
         'position_titles' => true
     ];
 }

@@ -37,7 +37,7 @@ class EmployeesController extends AppController
     public function view($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'Formations']
+            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'EmployeeFormations']
         ]);
 
         $this->set('employee', $employee);
@@ -52,6 +52,7 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->newEntity();
         if ($this->request->is('post')) {
+
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
 
             $phoneNumber = $employee['cellular'];
@@ -71,8 +72,7 @@ class EmployeesController extends AppController
         $positionTitles = $this->Employees->PositionTitles->find('list', ['limit' => 200]);
         $buildings = $this->Employees->Buildings->find('list', ['limit' => 200]);
         $supervisors = $this->Employees->Supervisors->find('list', ['limit' => 200]);
-        $formations = $this->Employees->Formations->find('list', ['limit' => 200]);
-        $this->set(compact('employee', 'civilities', 'languages', 'positionTitles', 'buildings', 'supervisors', 'formations'));
+        $this->set(compact('employee', 'civilities', 'languages', 'positionTitles', 'buildings', 'supervisors'));
     }
 
     public static function isvalidNumber($number){
@@ -103,7 +103,7 @@ class EmployeesController extends AppController
     public function edit($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => ['Formations']
+            'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
@@ -119,8 +119,7 @@ class EmployeesController extends AppController
         $positionTitles = $this->Employees->PositionTitles->find('list', ['limit' => 200]);
         $buildings = $this->Employees->Buildings->find('list', ['limit' => 200]);
         $supervisors = $this->Employees->Supervisors->find('list', ['limit' => 200]);
-        $formations = $this->Employees->Formations->find('list', ['limit' => 200]);
-        $this->set(compact('employee', 'civilities', 'languages', 'positionTitles', 'buildings', 'supervisors', 'formations'));
+        $this->set(compact('employee', 'civilities', 'languages', 'positionTitles', 'buildings', 'supervisors'));
     }
 
     /**
