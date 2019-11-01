@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Sam 19 Octobre 2019 à 00:02
+-- Généré le :  Ven 01 Novembre 2019 à 17:52
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -124,15 +124,17 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `number`, `civility_id`, `last_name`, `first_name`, `language_id`, `cellular`, `email`, `position_title_id`, `building_id`, `supervisor_id`, `more_info`, `date_sent_formation_plan`, `actif`) VALUES
-(1, 'a4s5d7rt89', 1, 'user', 'user', 1, '5141111111', 'user@user.com', 1, 1, 1, '', NULL, 0);
+(1, 'a4s5d7rt89', 1, 'user', 'user', 1, '5141111111', 'user@user.com', 1, 1, 1, '', NULL, 0),
+(2, 'fasfasfasf', 1, 'ASF', 'GFASG', 1, '1111111111', 'd@d.com', 1, 1, 1, '', '2023-02-14', 0),
+(3, 'fasfasfasf', 1, 'ASF', 'GFASG', 1, '222-222-2222', 'd@sd.com', 1, 1, 1, '', '2020-05-24', 0);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `employee_formations`
+-- Structure de la table `employees_formations`
 --
 
-CREATE TABLE `employee_formations` (
+CREATE TABLE `employees_formations` (
   `id` int(11) NOT NULL,
   `date_done` date DEFAULT NULL,
   `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -141,11 +143,14 @@ CREATE TABLE `employee_formations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Contenu de la table `employee_formations`
+-- Contenu de la table `employees_formations`
 --
 
-INSERT INTO `employee_formations` (`id`, `date_done`, `note`, `employee_id`, `formation_id`) VALUES
-(1, NULL, 'cacaca', 1, 10);
+INSERT INTO `employees_formations` (`id`, `date_done`, `note`, `employee_id`, `formation_id`) VALUES
+(2, NULL, NULL, 2, 2),
+(4, NULL, NULL, 1, 8),
+(5, NULL, NULL, 2, 8),
+(6, NULL, NULL, 3, 8);
 
 -- --------------------------------------------------------
 
@@ -171,8 +176,7 @@ CREATE TABLE `formations` (
 
 INSERT INTO `formations` (`id`, `number`, `title`, `categorie_id`, `frequence_id`, `start_reminder_id`, `modality_id`, `duration`, `note`) VALUES
 (2, 'fasf3', 'asfa', 1, 1, 1, 1, '3', ''),
-(8, 'shgszh', '626h', 1, 1, 1, 1, '4', ''),
-(10, '6236236', 'zdhsdhsh', 1, 1, 1, 1, '6463463473', '');
+(8, 'shgszh', '626h', 1, 1, 1, 1, '4', '');
 
 -- --------------------------------------------------------
 
@@ -414,9 +418,9 @@ ALTER TABLE `employees`
   ADD KEY `supervisor_id` (`supervisor_id`);
 
 --
--- Index pour la table `employee_formations`
+-- Index pour la table `employees_formations`
 --
-ALTER TABLE `employee_formations`
+ALTER TABLE `employees_formations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_id` (`employee_id`),
   ADD KEY `formation_id` (`formation_id`);
@@ -528,15 +532,15 @@ ALTER TABLE `civilities`
 ALTER TABLE `employees`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `employee_formations`
+-- AUTO_INCREMENT pour la table `employees_formations`
 --
-ALTER TABLE `employee_formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `employees_formations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `formations`
 --
 ALTER TABLE `formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT pour la table `formations_position_titles`
 --
@@ -597,11 +601,11 @@ ALTER TABLE `employees`
   ADD CONSTRAINT `employees_ibfk_5` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `employee_formations`
+-- Contraintes pour la table `employees_formations`
 --
-ALTER TABLE `employee_formations`
-  ADD CONSTRAINT `employee_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `employees_formations`
+  ADD CONSTRAINT `employees_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employees_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `formations`
