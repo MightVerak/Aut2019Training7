@@ -107,6 +107,11 @@ class EmployeesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+            $phoneNumber = $employee['cellular'];
+            if(!$this->isvalidNumber($phoneNumber)){
+                $employee['cellular'] = $this->formatPhone($phoneNumber);
+            }
+            
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
