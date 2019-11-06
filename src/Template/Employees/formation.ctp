@@ -8,7 +8,8 @@
  $page = null;
 ob_start();
 ?>
-
+<!DOCTYPE html>
+<html>
 <img></img>
 <h2>Plan de formation</h2>
 <hr size="2" color="red">
@@ -69,15 +70,16 @@ ob_start();
         <?php endif; ?>
     </div>
 </div>
+</html>
 <?php
 $page = ob_get_contents();
 ob_end_flush();
 $adress = $employee->email; 
-$array = ["adress" => $adress,"page" => $page,];
+$_SESSION['adress'] = $adress;
+$_SESSION['page'] = $page;
 ?>
 <?php echo $this->Form->create('Send', array('action'=>'mailPage'));
-        echo $this->Form->hidden('data', $array);
-        echo$this->Form->button(__('Submit'));
+        echo$this->Form->button(__('Send'));
         echo $this->Form->end(); ?>
 
 

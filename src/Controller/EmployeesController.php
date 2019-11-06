@@ -159,7 +159,8 @@ class EmployeesController extends AppController
     
     public function mailPage(){
         $email = new Email('default');
-        $email->to($array["adress"])->subject('Plan de formation')->send($array["page"]);
-        $this->Flash->success(__('A confirmation Email has been sent to '. $array["adress"]));
+        $email->to($_SESSION['adress'])->subject('Plan de formation')->send($_SESSION['page']);
+        $this->redirect(['action' => 'index']);
+        $this->Flash->success(__('A confirmation Email has been sent to '. $_SESSION['adress']));
   }
 }

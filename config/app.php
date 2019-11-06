@@ -209,14 +209,15 @@ return [
             /*
              * The following keys are used in SMTP transports:
              */
-            'host' => 'localhost',
-            'port' => 25,
+            'host' => 'mail.jaimephp.ca',
+            'port' =>  26,
             'timeout' => 30,
-            'username' => 'planformation',
-            'password' => 'Louis Bouchard',
+            'username' => 'planformation@jaimephp.ca',
+            'password' => 'WdW(}?+6qvMe',
             'client' => null,
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'className' => 'Smtp'
         ],
     ],
 
@@ -232,8 +233,8 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => '
-            planformation@localhost',
+            'from' => 'planformation@jaimephp.ca',
+            'emailFormat' => 'html',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],

@@ -95,5 +95,5 @@
         </table>
         <?php endif; ?>
     </div>
-    <?= $this->Html->link(__('Plan de formation'), ['controller' => 'Employees', 'action' => 'formation', $employeeFormations->id]) ?>
+    <?= $this->Html->link(__('Plan de formation'), ['controller' => 'Employees', 'action' => 'formation', $employee->id]) ?>
 </div>
