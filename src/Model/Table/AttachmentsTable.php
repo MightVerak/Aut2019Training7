@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Attachments Model
  *
+ * @property \App\Model\Table\EmployeeFormationsTable&\Cake\ORM\Association\BelongsTo $EmployeeFormations
+ *
  * @method \App\Model\Entity\Attachment get($primaryKey, $options = [])
  * @method \App\Model\Entity\Attachment newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Attachment[] newEntities(array $data, array $options = [])
@@ -33,6 +35,11 @@ class AttachmentsTable extends Table
         $this->setTable('attachments');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('EmployeeFormations', [
+            'foreignKey' => 'employee_formation_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -48,10 +55,16 @@ class AttachmentsTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('file_name')
-            ->maxLength('file_name', 255)
-            ->requirePresence('file_name', 'create')
-            ->notEmptyFile('file_name');
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->requirePresence('name', 'create')
+            ->notEmptyString('name');
+
+        $validator
+            ->scalar('path')
+            ->maxLength('path', 255)
+            ->requirePresence('path', 'create')
+            ->notEmptyString('path');
 
         $validator
             ->date('load_date')
@@ -64,5 +77,19 @@ class AttachmentsTable extends Table
             ->allowEmptyString('note');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['employee_formation_id'], 'EmployeeFormations'));
+
+        return $rules;
     }
 }

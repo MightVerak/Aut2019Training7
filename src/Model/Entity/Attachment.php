@@ -7,9 +7,13 @@ use Cake\ORM\Entity;
  * Attachment Entity
  *
  * @property int $id
- * @property string $file_name
+ * @property string $name
+ * @property string $path
  * @property \Cake\I18n\FrozenDate $load_date
  * @property string|null $note
+ * @property int $employee_formation_id
+ *
+ * @property \App\Model\Entity\EmployeeFormation $employee_formation
  */
 class Attachment extends Entity
 {
@@ -23,8 +27,11 @@ class Attachment extends Entity
      * @var array
      */
     protected $_accessible = [
-        'file_name' => true,
+        'name' => true,
+        'path' => true,
         'load_date' => true,
-        'note' => true
+        'note' => true,
+        'employee_formation_id' => true,
+        'employee_formation' => true
     ];
 }

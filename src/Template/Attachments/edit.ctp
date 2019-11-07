@@ -14,6 +14,8 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Attachments'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Employee Formations'), ['controller' => 'EmployeeFormations', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Employee Formation'), ['controller' => 'EmployeeFormations', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="attachments form large-9 medium-8 columns content">
@@ -21,9 +23,11 @@
     <fieldset>
         <legend><?= __('Edit Attachment') ?></legend>
         <?php
-            echo $this->Form->control('file_name');
+            echo $this->Form->control('name');
+            echo $this->Form->control('path');
             echo $this->Form->control('load_date');
             echo $this->Form->control('note');
+            echo $this->Form->control('employee_formation_id', ['options' => $employeeFormations]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

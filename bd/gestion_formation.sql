@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1:3306
--- Généré le :  Ven 01 Novembre 2019 à 17:52
+-- Généré le :  Jeu 07 Novembre 2019 à 20:46
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -28,10 +28,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attachments` (
   `id` int(255) NOT NULL,
-  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `load_date` date NOT NULL,
-  `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `employee_formation_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `attachments`
+--
+
+INSERT INTO `attachments` (`id`, `name`, `path`, `load_date`, `note`, `employee_formation_id`) VALUES
+(4, '601_103_FTUR (1).pdf', 'files/7', '2019-11-07', NULL, 7);
 
 -- --------------------------------------------------------
 
@@ -124,17 +133,19 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `number`, `civility_id`, `last_name`, `first_name`, `language_id`, `cellular`, `email`, `position_title_id`, `building_id`, `supervisor_id`, `more_info`, `date_sent_formation_plan`, `actif`) VALUES
-(1, 'a4s5d7rt89', 1, 'user', 'user', 1, '5141111111', 'user@user.com', 1, 1, 1, '', NULL, 0),
+(1, 'a4s5d7rt89', 1, 'user', 'user', 2, '5141111111', 'user@user.com', 4, 1, 2, '', NULL, 0),
 (2, 'fasfasfasf', 1, 'ASF', 'GFASG', 1, '1111111111', 'd@d.com', 1, 1, 1, '', '2023-02-14', 0),
-(3, 'fasfasfasf', 1, 'ASF', 'GFASG', 1, '222-222-2222', 'd@sd.com', 1, 1, 1, '', '2020-05-24', 0);
+(3, 'fasfasfasf', 1, 'ASF', 'GFASG', 1, '222-222-2222', 'd@sd.com', 1, 1, 1, '', '2020-05-24', 0),
+(4, '125rwar', 1, 'sdsa', 'das', 1, '1111111111111', 'aaa@aaa.com', 1, 1, 1, '', '2024-02-25', 0),
+(5, 'gagsagsa', 1, 'gasgasgsagasg', 'sagsagasgasg', 1, '6236236236236', 's@sss.com', 1, 1, 1, '', '2023-03-05', 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `employees_formations`
+-- Structure de la table `employee_formations`
 --
 
-CREATE TABLE `employees_formations` (
+CREATE TABLE `employee_formations` (
   `id` int(11) NOT NULL,
   `date_done` date DEFAULT NULL,
   `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -143,14 +154,16 @@ CREATE TABLE `employees_formations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Contenu de la table `employees_formations`
+-- Contenu de la table `employee_formations`
 --
 
-INSERT INTO `employees_formations` (`id`, `date_done`, `note`, `employee_id`, `formation_id`) VALUES
-(2, NULL, NULL, 2, 2),
-(4, NULL, NULL, 1, 8),
-(5, NULL, NULL, 2, 8),
-(6, NULL, NULL, 3, 8);
+INSERT INTO `employee_formations` (`id`, `date_done`, `note`, `employee_id`, `formation_id`) VALUES
+(7, NULL, NULL, 1, 2),
+(8, NULL, NULL, 4, 2),
+(9, NULL, NULL, 4, 8),
+(10, NULL, NULL, 5, 2),
+(11, NULL, NULL, 5, 8),
+(12, '2023-02-03', '', 5, 8);
 
 -- --------------------------------------------------------
 
@@ -386,7 +399,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `admin`) VALUES
 -- Index pour la table `attachments`
 --
 ALTER TABLE `attachments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_formation_id`);
 
 --
 -- Index pour la table `buildings`
@@ -418,9 +432,9 @@ ALTER TABLE `employees`
   ADD KEY `supervisor_id` (`supervisor_id`);
 
 --
--- Index pour la table `employees_formations`
+-- Index pour la table `employee_formations`
 --
-ALTER TABLE `employees_formations`
+ALTER TABLE `employee_formations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_id` (`employee_id`),
   ADD KEY `formation_id` (`formation_id`);
@@ -510,7 +524,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `buildings`
 --
@@ -530,17 +544,17 @@ ALTER TABLE `civilities`
 -- AUTO_INCREMENT pour la table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT pour la table `employees_formations`
+-- AUTO_INCREMENT pour la table `employee_formations`
 --
-ALTER TABLE `employees_formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `employee_formations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `formations`
 --
 ALTER TABLE `formations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `formations_position_titles`
 --
@@ -591,6 +605,12 @@ ALTER TABLE `users`
 --
 
 --
+-- Contraintes pour la table `attachments`
+--
+ALTER TABLE `attachments`
+  ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`employee_formation_id`) REFERENCES `employee_formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -601,11 +621,11 @@ ALTER TABLE `employees`
   ADD CONSTRAINT `employees_ibfk_5` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `employees_formations`
+-- Contraintes pour la table `employee_formations`
 --
-ALTER TABLE `employees_formations`
-  ADD CONSTRAINT `employees_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employees_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `employee_formations`
+  ADD CONSTRAINT `employee_formations_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_formations_ibfk_2` FOREIGN KEY (`formation_id`) REFERENCES `formations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `formations`

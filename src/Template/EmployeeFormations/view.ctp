@@ -40,5 +40,10 @@
             <th scope="row"><?= __('Date Done') ?></th>
             <td><?= h($employeeFormation->date_done) ?></td>
         </tr>
+		<tr>
+		<th scope="row"></th>
+            <td><?= $this->Html->link('Add a file',['controller' => 'Attachments', 'action' => 'add', $employeeFormation->id],['class' => 'button', 'target' => '']) ?></td>
+		
+		</tr>
     </table>
 </div>

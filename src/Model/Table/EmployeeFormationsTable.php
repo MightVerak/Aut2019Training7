@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\BelongsTo $Employees
  * @property \App\Model\Table\FormationsTable&\Cake\ORM\Association\BelongsTo $Formations
+ * @property \App\Model\Table\AttachmentsTable&\Cake\ORM\Association\HasMany $Attachments
  *
  * @method \App\Model\Entity\EmployeeFormation get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmployeeFormation newEntity($data = null, array $options = [])
@@ -44,6 +45,9 @@ class EmployeeFormationsTable extends Table
         $this->belongsTo('Formations', [
             'foreignKey' => 'formation_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Attachments', [
+            'foreignKey' => 'employee_formation_id'
         ]);
     }
 

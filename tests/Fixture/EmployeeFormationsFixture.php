@@ -26,6 +26,8 @@ class EmployeeFormationsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'employee_formations_ibfk_1' => ['type' => 'foreign', 'columns' => ['employee_id'], 'references' => ['employees', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'employee_formations_ibfk_2' => ['type' => 'foreign', 'columns' => ['formation_id'], 'references' => ['formations', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,7 +45,7 @@ class EmployeeFormationsFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'date_done' => '2019-09-20',
+                'date_done' => '2019-11-07',
                 'note' => 'Lorem ipsum dolor sit amet',
                 'employee_id' => 1,
                 'formation_id' => 1

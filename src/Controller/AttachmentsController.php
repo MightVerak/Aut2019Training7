@@ -19,6 +19,9 @@ class AttachmentsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['EmployeeFormations']
+        ];
         $attachments = $this->paginate($this->Attachments);
 
         $this->set(compact('attachments'));
@@ -34,7 +37,7 @@ class AttachmentsController extends AppController
     public function view($id = null)
     {
         $attachment = $this->Attachments->get($id, [
-            'contain' => []
+            'contain' => ['EmployeeFormations']
         ]);
 
         $this->set('attachment', $attachment);
@@ -45,19 +48,59 @@ class AttachmentsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
-        $attachment = $this->Attachments->newEntity();
-        if ($this->request->is('post')) {
-            $attachment = $this->Attachments->patchEntity($attachment, $this->request->getData());
-            if ($this->Attachments->save($attachment)) {
-                $this->Flash->success(__('The attachment has been saved.'));
+		 $uploadData = '';
+		  if ($this->request->is('post')) {
+            if(!empty($this->request->data['file']['name'])){
+                $fileName = $this->request->data['file']['name'];
+			
+                $uploadPath = ('files/' . $id);
+                $uploadFile = $uploadPath.$fileName;
+                $ext = substr(strtolower(strrchr($fileName, '.')), 1); 
+                $arr_ext = array('pdf');
+                if(in_array($ext, $arr_ext))
+                {
+                    if(move_uploaded_file($this->request->data['file']['tmp_name'],$uploadFile)){
+                        $uploadData = $this->Attachments->newEntity();
+                        $uploadData->name = $fileName;
+                        $uploadData->path = $uploadPath;
+                        $uploadData->load_date = date("Y-m-d H:i:s");
+                        $uploadData->employee_formation_id = $id;
+                      
+                        if ($this->Attachments->save($uploadData)) {
+                            $this->Flash->success(__('File has been uploaded and inserted successfully.'));
 
-                return $this->redirect(['action' => 'index']);
+                            return $this->redirect(['controller' => 'EmployeeFormations', 'action' => 'view', $id]);
+                        }else{
+                            $this->Flash->error(__('Unable to upload file, please try again.'));
+                        }
+                    }else{
+                        $this->Flash->error(__('Unable to upload file, please try again.'));
+                    }
+                } else {
+                    $this->Flash->error(__('File is not an image.'));
+                }
+                
+            }else{
+                $this->Flash->error(__('Please choose a file to upload.'));
             }
-            $this->Flash->error(__('The attachment could not be saved. Please, try again.'));
+            
         }
-        $this->set(compact('attachment'));
+        $this->set('uploadData', $uploadData);
+        
+        $files = $this->Attachments->find('all', ['order' => ['Attachments.load_date' => 'DESC']]);
+        $filesRowNum = $files->count();
+        $this->set('files',$files);
+        $this->set('filesRowNum',$filesRowNum);
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+       
     }
 
     /**
@@ -81,7 +124,8 @@ class AttachmentsController extends AppController
             }
             $this->Flash->error(__('The attachment could not be saved. Please, try again.'));
         }
-        $this->set(compact('attachment'));
+        $employeeFormations = $this->Attachments->EmployeeFormations->find('list', ['limit' => 200]);
+        $this->set(compact('attachment', 'employeeFormations'));
     }
 
     /**

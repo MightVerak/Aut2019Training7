@@ -4,22 +4,13 @@
  * @var \App\Model\Entity\Attachment $attachment
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Attachments'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="attachments form large-9 medium-8 columns content">
-    <?= $this->Form->create($attachment) ?>
-    <fieldset>
-        <legend><?= __('Add Attachment') ?></legend>
-        <?php
-            echo $this->Form->control('file_name');
-            echo $this->Form->control('load_date');
-            echo $this->Form->control('note');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<h1>Upload File</h1>
+<div class="content">
+    <?= $this->Flash->render() ?>
+    <div class="upload-frm">
+        <?php echo $this->Form->create($uploadData, array('enctype'=>'multipart/form-data')); ?>
+            <?php echo $this->Form->input('file', ['type' => 'file', 'class' => 'form-control']); ?>
+            <?php echo $this->Form->button(__('Upload File'), ['type'=>'submit', 'class' => 'form-controlbtn btn-default']); ?>
+        <?php echo $this->Form->end(); ?>
+    </div>
 </div>

@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Employee $employee
  * @property \App\Model\Entity\Formation $formation
+ * @property \App\Model\Entity\Attachment[] $attachments
  */
 class EmployeeFormation extends Entity
 {
@@ -32,6 +33,7 @@ class EmployeeFormation extends Entity
         'employee_id' => true,
         'formation_id' => true,
         'employee' => true,
-        'formation' => true
+        'formation' => true,
+        'attachments' => true
     ];
 }

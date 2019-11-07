@@ -8,6 +8,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Attachment'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Employee Formations'), ['controller' => 'EmployeeFormations', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Employee Formation'), ['controller' => 'EmployeeFormations', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="attachments index large-9 medium-8 columns content">
@@ -16,9 +18,11 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('file_name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('path') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('load_date') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('note') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('employee_formation_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -26,9 +30,11 @@
             <?php foreach ($attachments as $attachment): ?>
             <tr>
                 <td><?= $this->Number->format($attachment->id) ?></td>
-                <td><?= h($attachment->file_name) ?></td>
+                <td><?= h($attachment->name) ?></td>
+                <td><?= h($attachment->path) ?></td>
                 <td><?= h($attachment->load_date) ?></td>
                 <td><?= h($attachment->note) ?></td>
+                <td><?= $attachment->has('employee_formation') ? $this->Html->link($attachment->employee_formation->id, ['controller' => 'EmployeeFormations', 'action' => 'view', $attachment->employee_formation->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $attachment->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $attachment->id]) ?>
