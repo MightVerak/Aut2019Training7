@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use Cake\Mailer\Email;
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Employees Controller
@@ -63,7 +64,7 @@ class EmployeesController extends AppController
 
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
-
+                $this->addFormation($employee);
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
@@ -109,7 +110,7 @@ class EmployeesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
             $phoneNumber = $employee['cellular'];
-            if(!$this->isvalidNumber($phoneNumber)){
+            if(!$this->isvalidNumber($phoneNumber) && strlen($phoneNumber) != 0){
                 $employee['cellular'] = $this->formatPhone($phoneNumber);
             }
             
@@ -157,10 +158,31 @@ class EmployeesController extends AppController
         $this->set('employee', $employee);
     }
     
-    public function mailPage(){
+    public function mailPage()
+    {
         $email = new Email('default');
         $email->to($_SESSION['adress'])->subject('Plan de formation')->send($_SESSION['page']);
         $this->redirect(['action' => 'index']);
         $this->Flash->success(__('A confirmation Email has been sent to '. $_SESSION['adress']));
-  }
+    }
+
+    public function  addFormation($employee){
+
+        $Employeeformations = TableRegistry::getTableLocator()->get('employee_formations');
+        
+        $formations = TableRegistry::getTableLocator()->get('formations_position_titles')->
+        find()->
+        where(['position_title_id' => $employee['position_title_id']]);
+
+        $formations = $formations->all();
+        foreach($formations as $formation ){
+            $employeeformation = $Employeeformations->newEntities([
+                'formation_id' => $formation['formation_id'],
+                'employee_id' => $employee['id']
+            ]);
+ 
+            
+            $Employeeformations->save($employeeformation, ['checkExisting' => false]);
+        }
+    }
 }
