@@ -5,7 +5,9 @@
  * @var \App\Model\Entity\Employee $employee
  */
 use Cake\ORM\TableRegistry;
-use App\Controler\Employees;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
+
  $page = null;
 ob_start();
 ?>
@@ -65,11 +67,67 @@ ob_start();
                 <td><?= h($status->formation_status) ?></td>
                 <td><?= h(TableRegistry::get('frequences')->get($formation->frequence_id)->frequence); ?></td>
                 <td><?= h($employeeFormations->date_done) ?></td>
-                <td><?= //h(date('d/m/y', strtotime($employeeFormations->date_done . '+' . $this->addDate($formation->frequence_id)  ) ) ) 
-                h($employeeFormations->date_done) ?></td>
-                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
-                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
-                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
+                <?=
+        $date = null;
+
+        switch($formation->frequence_id){
+            case 1:
+                $date= '+1 week';
+            break;
+
+            case 2:
+                $date= '+1 month';
+            break;
+
+            case 3:
+                $date= '+3 month';
+            break;
+
+            case 4:
+                $date= '+6 month';
+            break;
+
+            case 5:
+                $date= '+18 month';
+            break;
+
+            case 6:
+                $date= '+1 year';
+            break;
+
+            case 7:
+                $date= '+2 year';
+            break;
+
+            case 8:
+                $date= '+3 year';
+            break;
+
+            case 9:
+                $date= '+4 year';
+            break;
+
+            case 10:
+                $date= '+5 year';
+            break;
+
+            case 11:
+                $date = null;
+            break;
+
+            case 12:
+                $date = null;
+            break;
+        }
+
+        $datetime = date('d/m/y', strtotime($employeeFormations->date_done .  $date ) )
+    ?>
+
+
+                <td><?= $employeeFormations->date_done == null || $date == null  ? '' : $datetime ; ?></td>
+                <td><?= ($employeeFormations->date_done != null && $date != null) && ($date != null && $datetime < $employeeFormations->date_done) ? __('Yes') : __('No'); ?></td>
+                <td><?= ($employeeFormations->date_done != null && $date != null) && ($date != null && $datetime > $employeeFormations->date_done) ? __('Yes') : __('No'); ?></td>
+                <td><?= ($employeeFormations->date_done == null && $date != null) || $datetime == Time::now() ? __('Yes') : __('No'); ?></td>
                 <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
             </tr>
             <?php endforeach; ?>

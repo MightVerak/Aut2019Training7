@@ -192,4 +192,59 @@ class EmployeesController extends AppController
             $Employeeformations->save($employeeformation);
         }
     }
+
+    public function addDate($frequenceid){
+        $date;
+
+        switch($date){
+            case 1:
+                $date= '1 week';
+            break;
+
+            case 2:
+                $date= '1 month';
+            break;
+
+            case 3:
+                $date= '3 month';
+            break;
+
+            case 4:
+                $date= '6 month';
+            break;
+
+            case 5:
+                $date= '18 month';
+            break;
+
+            case 6:
+                $date= '1 year';
+            break;
+
+            case 7:
+                $date= '2 year';
+            break;
+
+            case 8:
+                $date= '3 year';
+            break;
+
+            case 9:
+                $date= '4 year';
+            break;
+
+            case 10:
+                $date= '5 year';
+            break;
+
+            case 11:
+                $date= null;
+            break;
+
+            case 12:
+                $date= null;
+            break;
+        }
+        return $date;
+    }
 }
