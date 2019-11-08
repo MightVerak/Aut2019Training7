@@ -52,12 +52,12 @@ ob_start();
             </tr>
             <?php foreach ($employee->employee_formations as $employeeFormations): ?>
             <?php $formation =  TableRegistry::get('Formations')->get($employeeFormations->formation_id, ['contain' => ['Categories' , 'Frequences']]); 
-            $formationposition = TableRegistry::get('formationspositiontitles')->
+            $formationposition = TableRegistry::get('formationsPositionTitles')->
             find()->
             where(['position_title_id' => $employee['position_title_id']]);
     
             $formationposition = $formationposition->first(); 
-            $status =   TableRegistry::get('Formationstatuses')->get($formationposition->formation_status_id); ?>
+            $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); ?>
             <tr>
                 <td><?= h($formation->title) ?></td>
                 <td><?= h($status->formation_status) ?></td>

@@ -37,7 +37,7 @@
                 <td><?= $attachment->has('employee_formation') ? $this->Html->link($attachment->employee_formation->id, ['controller' => 'EmployeeFormations', 'action' => 'view', $attachment->employee_formation->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $attachment->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $attachment->id]) ?>
+                    
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $attachment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attachment->id)]) ?>
                 </td>
             </tr>

@@ -169,9 +169,9 @@ class EmployeesController extends AppController
 
     public function  addFormation($employee){
 
-        $Employeeformations = TableRegistry::get('employeeformations');
+        $Employeeformations = TableRegistry::get('employeeFormations');
         $Employeeformations->find();
-        $formations = TableRegistry::get('formationspositiontitles')->
+        $formations = TableRegistry::get('formationsPositionTitles')->
         find()->
         where(['position_title_id' => $employee['position_title_id']]);
 

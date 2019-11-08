@@ -59,27 +59,34 @@ class AttachmentsController extends AppController
                 $uploadFile = $uploadPath.$fileName;
                 $ext = substr(strtolower(strrchr($fileName, '.')), 1); 
                 $arr_ext = array('pdf');
+                
                 if(in_array($ext, $arr_ext))
                 {
-                    if(move_uploaded_file($this->request->data['file']['tmp_name'],$uploadFile)){
-                        $uploadData = $this->Attachments->newEntity();
-                        $uploadData->name = $fileName;
-                        $uploadData->path = $uploadPath;
-                        $uploadData->load_date = date("Y-m-d H:i:s");
-                        $uploadData->employee_formation_id = $id;
-                      
-                        if ($this->Attachments->save($uploadData)) {
-                            $this->Flash->success(__('File has been uploaded and inserted successfully.'));
-
-                            return $this->redirect(['controller' => 'EmployeeFormations', 'action' => 'view', $id]);
+                  
+                  if ($this->request->data['file']['size'] < 2000000) {
+                        
+                        if(move_uploaded_file($this->request->data['file']['tmp_name'],$uploadFile)){
+                            $uploadData = $this->Attachments->newEntity();
+                            $uploadData->name = $fileName;
+                            $uploadData->path = $uploadPath;
+                            $uploadData->load_date = date("Y-m-d H:i:s");
+                            $uploadData->employee_formation_id = $id;
+                          
+                            if ($this->Attachments->save($uploadData)) {
+                                $this->Flash->success(__('File has been uploaded and inserted successfully.'));
+    
+                                return $this->redirect(['controller' => 'EmployeeFormations', 'action' => 'view', $id]);
+                            }else{
+                                $this->Flash->error(__('Unable to upload file, please try again.'));
+                            }
                         }else{
                             $this->Flash->error(__('Unable to upload file, please try again.'));
                         }
-                    }else{
-                        $this->Flash->error(__('Unable to upload file, please try again.'));
-                    }
+                  } else {
+						 $this->Flash->error(__('File is too big.'));
+				  }
                 } else {
-                    $this->Flash->error(__('File is not an image.'));
+                    $this->Flash->error(__('File is not a pdf.'));
                 }
                 
             }else{
@@ -139,12 +146,30 @@ class AttachmentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $attachment = $this->Attachments->get($id);
+        $employeeFormationsId = $attachment->employee_formation_id;
         if ($this->Attachments->delete($attachment)) {
             $this->Flash->success(__('The attachment has been deleted.'));
         } else {
             $this->Flash->error(__('The attachment could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'EmployeeFormations', 'action' => 'view', $employeeFormationsId]);
     }
+    
+    public function download($id = null) {
+	$file = $this->Attachments->get($id);
+	
+	
+	$downloadPath = (WWW_ROOT. 'files' . DS . $file->employee_formation_id);
+    $downloadFile = $downloadPath.$file->name;
+	
+    $this->response->file($downloadFile, array(
+        'download' => true
+        
+    ));
+    return $this->response;
+
+
+
+	}
 }

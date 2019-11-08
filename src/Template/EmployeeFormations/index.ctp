@@ -19,9 +19,9 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                
                 <th scope="col"><?= $this->Paginator->sort('date_done') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('note') ?></th>
+              
                 <th scope="col"><?= $this->Paginator->sort('employee_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('formation_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -30,10 +30,10 @@
         <tbody>
             <?php foreach ($employeeFormations as $employeeFormation): ?>
             <tr>
-                <td><?= $this->Number->format($employeeFormation->id) ?></td>
+                
                 <td><?= h($employeeFormation->date_done) ?></td>
-                <td><?= h($employeeFormation->note) ?></td>
-                <td><?= $employeeFormation->has('employee') ? $this->Html->link($employeeFormation->employee->id, ['controller' => 'Employees', 'action' => 'view', $employeeFormation->employee->id]) : '' ?></td>
+     
+                <td><?= $employeeFormation->has('employee') ? $this->Html->link($employeeFormation->employee->number, ['controller' => 'Employees', 'action' => 'view', $employeeFormation->employee->id]) : '' ?></td>
                 <td><?= $employeeFormation->has('formation') ? $this->Html->link($employeeFormation->formation->title, ['controller' => 'Formations', 'action' => 'view', $employeeFormation->formation->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $employeeFormation->id]) ?>

@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Employee') ?></th>
-            <td><?= $employeeFormation->has('employee') ? $this->Html->link($employeeFormation->employee->id, ['controller' => 'Employees', 'action' => 'view', $employeeFormation->employee->id]) : '' ?></td>
+            <td><?= $employeeFormation->has('employee') ? $this->Html->link($employeeFormation->employee->number, ['controller' => 'Employees', 'action' => 'view', $employeeFormation->employee->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Formation') ?></th>
@@ -46,4 +46,35 @@
 		
 		</tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Attachments') ?></h4>
+        <?php if (!empty($employeeFormation->attachments)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+             
+                <th scope="col"><?= __('Name') ?></th>
+               
+                <th scope="col"><?= __('Load Date') ?></th>
+                <th scope="col"><?= __('Note') ?></th>
+            
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($employeeFormation->attachments as $attachments): ?>
+            <tr>
+          
+               <td><?= $this->Html->link($attachments->name, ['controller' => 'Attachments', 'action' => 'download', $attachments->id]) ?></td>
+              
+                <td><?= h($attachments->load_date) ?></td>
+                <td><?= h($attachments->note) ?></td>
+               
+                <td class="actions">
+                    <?= $this->Html->link('download', ['controller' => 'Attachments', 'action' => 'Download', $attachments->id]) ?>
+                    
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Attachments', 'action' => 'delete', $attachments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attachments->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
 </div>

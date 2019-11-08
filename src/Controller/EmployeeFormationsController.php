@@ -37,7 +37,7 @@ class EmployeeFormationsController extends AppController
     public function view($id = null)
     {
         $employeeFormation = $this->EmployeeFormations->get($id, [
-            'contain' => ['Employees', 'Formations']
+            'contain' => ['Employees', 'Formations', 'Attachments']
         ]);
 
         $this->set('employeeFormation', $employeeFormation);
