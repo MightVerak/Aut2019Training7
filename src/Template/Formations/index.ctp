@@ -35,7 +35,6 @@
                 <td><?= h($formation->frequence->frequence) ?></td>
                 <td><?= h($formation->start_reminder->start_reminder) ?></td>
                 <td><?= h($formation->modality->modality) ?></td>
-                
                 <td><?= $this->Number->format($formation->duration) ?></td>
                 <td><?= h($formation->note) ?></td>
                 <td class="actions">

@@ -33,7 +33,7 @@ class AttachmentsTable extends Table
         parent::initialize($config);
 
         $this->setTable('attachments');
-        $this->setDisplayField('id');
+        $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('EmployeeFormations', [

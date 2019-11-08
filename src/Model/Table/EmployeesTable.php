@@ -38,7 +38,7 @@ class EmployeesTable extends Table
         parent::initialize($config);
 
         $this->setTable('employees');
-        $this->setDisplayField('id');
+        $this->setDisplayField('number');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Civilities', [

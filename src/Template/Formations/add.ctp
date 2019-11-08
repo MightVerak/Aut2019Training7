@@ -6,7 +6,7 @@
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+    <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Formations'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
@@ -23,7 +23,7 @@
             echo $this->Form->control('modality_id', ['options' => $modalities]);
             echo $this->Form->control('duration');
             echo $this->Form->control('note');
-            echo $this->Form->control('position_titles_id', ['options' => $positionTitles]);
+            echo $this->Form->control('position_titles._ids', ['options' => $positionTitles]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

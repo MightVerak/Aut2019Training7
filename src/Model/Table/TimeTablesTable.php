@@ -31,7 +31,7 @@ class TimeTablesTable extends Table
         parent::initialize($config);
 
         $this->setTable('time_select');
-        $this->setDisplayField('id');
+        $this->setDisplayField('time_select');
         $this->setPrimaryKey('id');
     }
 

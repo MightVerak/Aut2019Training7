@@ -33,7 +33,7 @@ class FormationStatusesTable extends Table
         parent::initialize($config);
 
         $this->setTable('formation_statuses');
-        $this->setDisplayField('id');
+        $this->setDisplayField('formation_status');
         $this->setPrimaryKey('id');
 
         $this->hasMany('FormationsPositionTitles', [

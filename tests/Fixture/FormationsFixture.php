@@ -30,6 +30,10 @@ class FormationsFixture extends TestFixture
             'start_reminder' => ['type' => 'index', 'columns' => ['start_reminder_id'], 'length' => []],
             'modality' => ['type' => 'index', 'columns' => ['modality_id'], 'length' => []],
             'categorie_2' => ['type' => 'index', 'columns' => ['categorie_id'], 'length' => []],
+            'frequence_id' => ['type' => 'index', 'columns' => ['frequence_id'], 'length' => []],
+            'categorie_id' => ['type' => 'index', 'columns' => ['categorie_id'], 'length' => []],
+            'modality_id' => ['type' => 'index', 'columns' => ['modality_id'], 'length' => []],
+            'start_reminder_id' => ['type' => 'index', 'columns' => ['start_reminder_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],

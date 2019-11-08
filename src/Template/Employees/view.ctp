@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Employee $employee
  */
+use Cake\ORM\TableRegistry;
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -74,17 +75,19 @@
         <h4><?= __('Related Employee Formations') ?></h4>
         <?php if (!empty($employee->employee_formations)): ?>
         <table cellpadding="0" cellspacing="0">
-            <tr>
+            <tr> 
+                <th scope="col"><?= __('Formation') ?></th>
                 <th scope="col"><?= __('Date Done') ?></th>
                 <th scope="col"><?= __('Note') ?></th>
-                <th scope="col"><?= __('Formation') ?></th>
+               
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($employee->employee_formations as $employeeFormations): ?>
             <tr>
+                <td><?= h(TableRegistry::get('Formations')->get($employeeFormations->formation_id)->title); ?></td>
                 <td><?= h($employeeFormations->date_done) ?></td>
                 <td><?= h($employeeFormations->note) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
+
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'EmployeeFormations', 'action' => 'view', $employeeFormations->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'EmployeeFormations', 'action' => 'edit', $employeeFormations->id]) ?>

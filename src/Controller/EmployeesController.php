@@ -4,7 +4,7 @@ namespace App\Controller;
 use Cake\Mailer\Email;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
-
+use App\Model\Entity\EmployeeFormation;
 /**
  * Employees Controller
  *
@@ -43,6 +43,7 @@ class EmployeesController extends AppController
         ]);
 
         $this->set('employee', $employee);
+
     }
 
     /**
@@ -168,21 +169,20 @@ class EmployeesController extends AppController
 
     public function  addFormation($employee){
 
-        $Employeeformations = TableRegistry::getTableLocator()->get('employee_formations');
-        
-        $formations = TableRegistry::getTableLocator()->get('formations_position_titles')->
+        $Employeeformations = TableRegistry::get('employeeformations');
+        $Employeeformations->find();
+        $formations = TableRegistry::get('formationspositiontitles')->
         find()->
         where(['position_title_id' => $employee['position_title_id']]);
 
         $formations = $formations->all();
         foreach($formations as $formation ){
-            $employeeformation = $Employeeformations->newEntities([
+            $employeeformation = new EmployeeFormation([
                 'formation_id' => $formation['formation_id'],
                 'employee_id' => $employee['id']
             ]);
  
-            
-            $Employeeformations->save($employeeformation, ['checkExisting' => false]);
+            $Employeeformations->save($employeeformation);
         }
     }
 }

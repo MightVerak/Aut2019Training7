@@ -4,7 +4,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Employee $employee
  */
-
+use Cake\ORM\TableRegistry;
  $page = null;
 ob_start();
 ?>
@@ -51,19 +51,19 @@ ob_start();
                 <th scope="col"><?= __('Jamais faite') ?></th>
             </tr>
             <?php foreach ($employee->employee_formations as $employeeFormations): ?>
-            <?php //$formation = $formations->get($id, [
-                //'contain' => ['Categories' , 'Frequences']
-            //]); ?>
+            <?php $formation =  TableRegistry::get('Formations')->get($employeeFormations->formation_id, ['contain' => ['Categories' , 'Frequences']]); 
+            $formationposition = TableRegistry::get('formationspositiontitles')->
+            find()->
+            where(['position_title_id' => $employee['position_title_id']]);
+    
+            $formationposition = $formationposition->first(); 
+            $status =   TableRegistry::get('Formationstatuses')->get($formationposition->formation_status_id); ?>
             <tr>
+                <td><?= h($formation->title) ?></td>
+                <td><?= h($status->formation_status) ?></td>
+                <td><?= h(TableRegistry::get('frequences')->get($formation->frequence_id)->frequence); ?></td>
                 <td><?= h($employeeFormations->date_done) ?></td>
-                <td><?= h($employeeFormations->note) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
-                <td><?= h($employeeFormations->date_done) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
-                <td><?= h($employeeFormations->formation_title) ?></td>
+                <td><?= h($formation->formation_title) ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
