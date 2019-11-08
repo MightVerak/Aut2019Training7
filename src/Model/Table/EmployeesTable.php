@@ -102,7 +102,9 @@ class EmployeesTable extends Table
             ->add('cellular', 'isValidUSPhoneFormat', [
                 'rule' => 'isValidUSPhoneFormat',
                 'provider' => 'table',
-            ]);
+            ])
+            ->maxLength('cellular', 12)
+            ->minLength('cellular', 10);
 
         
 
@@ -110,6 +112,7 @@ class EmployeesTable extends Table
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
+            
 
         $validator
             ->scalar('more_info')

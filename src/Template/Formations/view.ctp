@@ -51,33 +51,4 @@
             <td><?= $this->Number->format($formation->duration) ?></td>
         </tr>
     </table>
-    <div class="related">
-        <h4><?= __('Related Employee Formations') ?></h4>
-        <?php if (!empty($formation->employee_formations)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Date Done') ?></th>
-                <th scope="col"><?= __('Note') ?></th>
-                <th scope="col"><?= __('Employee Id') ?></th>
-                <th scope="col"><?= __('Formation Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($formation->employee_formations as $employeeFormations): ?>
-            <tr>
-                <td><?= h($employeeFormations->id) ?></td>
-                <td><?= h($employeeFormations->date_done) ?></td>
-                <td><?= h($employeeFormations->note) ?></td>
-                <td><?= h($employeeFormations->employee_id) ?></td>
-                <td><?= h($employeeFormations->formation_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'EmployeeFormations', 'action' => 'view', $employeeFormations->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'EmployeeFormations', 'action' => 'edit', $employeeFormations->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'EmployeeFormations', 'action' => 'delete', $employeeFormations->id], ['confirm' => __('Are you sure you want to delete # {0}?', $employeeFormations->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
 </div>

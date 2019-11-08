@@ -5,6 +5,7 @@
  * @var \App\Model\Entity\Employee $employee
  */
 use Cake\ORM\TableRegistry;
+use App\Controler\Employees;
  $page = null;
 ob_start();
 ?>
@@ -59,11 +60,17 @@ ob_start();
             $formationposition = $formationposition->first(); 
             $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); ?>
             <tr>
+            
                 <td><?= h($formation->title) ?></td>
                 <td><?= h($status->formation_status) ?></td>
                 <td><?= h(TableRegistry::get('frequences')->get($formation->frequence_id)->frequence); ?></td>
                 <td><?= h($employeeFormations->date_done) ?></td>
-                <td><?= h($formation->formation_title) ?></td>
+                <td><?= //h(date('d/m/y', strtotime($employeeFormations->date_done . '+' . $this->addDate($formation->frequence_id)  ) ) ) 
+                h($employeeFormations->date_done) ?></td>
+                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
+                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
+                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
+                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
             </tr>
             <?php endforeach; ?>
         </table>

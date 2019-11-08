@@ -39,7 +39,7 @@ class EmployeesController extends AppController
     public function view($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'EmployeeFormations']
+            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'employeeformations']
         ]);
 
         $this->set('employee', $employee);
@@ -59,7 +59,7 @@ class EmployeesController extends AppController
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
 
             $phoneNumber = $employee['cellular'];
-            if(!$this->isvalidNumber($phoneNumber)){
+            if($this->needformating($phoneNumber)){
                 $employee['cellular'] = $this->formatPhone($phoneNumber);
             }
 
@@ -80,6 +80,14 @@ class EmployeesController extends AppController
 
     public static function isvalidNumber($number){
         if (strlen($number) == 12){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function needformating($number){
+        if (strlen($number) == 10){
             return true;
         }else{
             return false;
@@ -111,13 +119,12 @@ class EmployeesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
             $phoneNumber = $employee['cellular'];
-            if(!$this->isvalidNumber($phoneNumber) && strlen($phoneNumber) != 0){
+            if($this->needformating($phoneNumber)){
                 $employee['cellular'] = $this->formatPhone($phoneNumber);
             }
             
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));

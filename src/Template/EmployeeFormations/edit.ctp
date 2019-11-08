@@ -13,7 +13,6 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $employeeFormation->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Employee Formations'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Employees'), ['controller' => 'Employees', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Employee'), ['controller' => 'Employees', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Formations'), ['controller' => 'Formations', 'action' => 'index']) ?></li>
