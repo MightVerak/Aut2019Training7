@@ -12,6 +12,17 @@
 </nav>
 <div class="employees index large-9 medium-8 columns content">
     <h3><?= __('Employees') ?></h3>
+
+    <p>
+    <?php 
+    echo $this->Form->create(null,['type'=>'post']);
+    echo $this->Form->control('keyword',['type' => 'text','label' => '']);
+    echo $this->Form->button(__('Search'));
+    echo $this->Form->end() ?>
+    </p>
+    
+    
+
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

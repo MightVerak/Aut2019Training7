@@ -21,11 +21,26 @@ class EmployeesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors']
-        ];
-        $employees = $this->paginate($this->Employees);
 
+        if ($this->request->is('post')) {
+
+        $keyword = $this->request->getData(['keyword']);
+
+
+        }
+        if(!empty($keyword)){
+            $this->paginate = ['conditions'=> array( 
+            'OR'=>array( 
+                'first_name LIKE'=>'%'.$keyword.'%', 
+                'last_name LIKE'=>'%'.$keyword.'%')
+                ),'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors']];
+        }else{
+            $this->paginate = [
+            'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors']];
+        }
+
+        
+        $employees = $this->paginate($this->Employees);
         $this->set(compact('employees'));
     }
 
@@ -247,4 +262,5 @@ class EmployeesController extends AppController
         }
         return $date;
     }
+
 }
