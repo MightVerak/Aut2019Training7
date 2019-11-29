@@ -69,9 +69,22 @@ class AppController extends Controller
             'unauthorizedRedirect' => $this->referer()
         ]);
 
+        
+
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
 
+    }
+    public function isAuthorized()
+	{
+        $action = $this->request->getParam('action');
+      
+        if (in_array($action, ['emailer'])) {
+                        return true;
+        } 
+        
+        
+    return false;
     }
         
 }

@@ -19,25 +19,9 @@ class FormationsController extends AppController
      */
     public function index()
     {
-
-        if ($this->request->is('post')) {
-
-            $keyword = $this->request->getData(['keyword']);
-    
-    
-            }
-            if(!empty($keyword)){
-                $this->paginate = ['conditions'=> array( 
-                'OR'=>array( 
-                    'number LIKE'=>'%'.$keyword.'%', 
-                    'title LIKE'=>'%'.$keyword.'%')
-                    ),  'contain' => ['Categories', 'Frequences', 'StartReminders', 'Modalities']];
-            }else{
-                $this->paginate = [
-                    'contain' => ['Categories', 'Frequences', 'StartReminders', 'Modalities']
-                ];
-            }
-
+        $this->paginate = [
+            'contain' => ['Categories', 'Frequences', 'StartReminders', 'Modalities']
+        ];
         $formations = $this->paginate($this->Formations);
 
         $this->set(compact('formations'));

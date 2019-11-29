@@ -19,6 +19,11 @@ class EmployeesController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
+    public function initialize()
+{
+    parent::initialize();
+    $this->Auth->allow(['checkEmail']);
+}
     public function index()
     {
 
@@ -262,5 +267,109 @@ class EmployeesController extends AppController
         }
         return $date;
     }
+
+    public function checkEmail($mail = null){
+
+    
+        $employee = $this->Employees->find('all', ['conditions' => ['email =' => $mail], 'contain'  
+        => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'EmployeeFormations'] ])->first();
+       
+
+        if ($employee->id != null) {
+            $this->anonymeMail($employee);
+            $this->Flash->error(__('Sa marche.'));
+            return $this->redirect(['controller'=>'home','action' => 'index']);
+        }
+        $this->Flash->error(__('ostie de criss.'));
+        return $this->redirect(['controller'=>'home','action' => 'index']);
+    
+    }
+
+    private function anonymeMail($employee){
+        $email = new Email('default');
+        $page = '<!DOCTYPE html>
+        <html>
+        <img></img>
+        <h2>Plan de formation</h2>
+        <hr size="2" color="red">
+        <div class="employees view large-9 medium-8 columns content">
+            <table class="vertical-table">
+                <tr>
+                    <th scope="row">Numéro de l\'employé: </th>
+                    <td> '. $employee->number . ' </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Nom de l\'employé: </th>
+                    <td> '.$employee->civility->civility. ' ' .$employee->first_name.' '.$employee->last_name . ' </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Titre du poste </th>
+                    <td> '.$employee->position_title->position_title.' </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Supervisor </th>
+                    <td> '.$employee->supervisor->name.' </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Building </th>
+                    <td> '. $employee->building->building.' </td>
+                </tr>
+            </table>
+            <div class="related"> ';
+            
+                if (!empty($employee->employee_formations)) {
+                    $page .= '<table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th scope="col"> Formation </th>
+                        <th scope="col"> Statut </th>
+                        <th scope="col"> Fréquence </th>
+                        <th scope="col"> Faite le </th>
+                        <th scope="col"> Prévue le </th>
+                        <th scope="col"> Expirée </th>
+                        <th scope="col"> À venir </th>
+                        <th scope="col"> À faire </th>
+                        <th scope="col"> Jamais faite </th>
+                    </tr>';
+
+                    foreach ($employee->employee_formations as $employeeFormations){
+                    $formation =  TableRegistry::get('Formations')->get($employeeFormations->formation_id, ['contain' => ['Categories' , 'Frequences']]); 
+                    $formationposition = TableRegistry::get('formationsPositionTitles')->
+                    find()->
+                    where(['position_title_id' => $employee['position_title_id']]);
+            
+                    $formationposition = $formationposition->first(); 
+                    $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); 
+
+                    $page .= '<tr>
+                    
+                    <td> '.$formation->title.' </td>
+                    <td> '.$status->formation_status.' </td>
+                    <td> '.TableRegistry::get('frequences')->get($formation->frequence_id)->frequence .' </td>
+                    <td> '.$employeeFormations->date_done.' </td>
+                   
+    
+    
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td> </td>
+                    <td>  </td>
+                </tr>';
+                    } 
+                    
+                   
+                   $page .= '</table>';
+                
+                
+            
+                }
+                $page .= '</div>
+                        </div>
+                    </html>'; 
+                
+        $email->to($employee->email)->subject('Plan de formation')->send($page);
+    }
+
+
 
 }
