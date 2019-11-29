@@ -213,61 +213,6 @@ class EmployeesController extends AppController
         }
     }
 
-    public function addDate($frequenceid){
-        $date;
-
-        switch($date){
-            case 1:
-                $date= '1 week';
-            break;
-
-            case 2:
-                $date= '1 month';
-            break;
-
-            case 3:
-                $date= '3 month';
-            break;
-
-            case 4:
-                $date= '6 month';
-            break;
-
-            case 5:
-                $date= '18 month';
-            break;
-
-            case 6:
-                $date= '1 year';
-            break;
-
-            case 7:
-                $date= '2 year';
-            break;
-
-            case 8:
-                $date= '3 year';
-            break;
-
-            case 9:
-                $date= '4 year';
-            break;
-
-            case 10:
-                $date= '5 year';
-            break;
-
-            case 11:
-                $date= null;
-            break;
-
-            case 12:
-                $date= null;
-            break;
-        }
-        return $date;
-    }
-
     public function checkEmail($mail = null){
 
     
@@ -289,46 +234,45 @@ class EmployeesController extends AppController
         $email = new Email('default');
         $page = '<!DOCTYPE html>
         <html>
-        <img></img>
         <h2>Plan de formation</h2>
         <hr size="2" color="red">
-        <div class="employees view large-9 medium-8 columns content">
-            <table class="vertical-table">
+        <div>
+            <table>
                 <tr>
-                    <th scope="row">Numéro de l\'employé: </th>
+                    <th>Numéro de l\'employé: </th>
                     <td> '. $employee->number . ' </td>
                 </tr>
                 <tr>
-                    <th scope="row"> Nom de l\'employé: </th>
+                    <th>  Nom de l\'employé: </th>
                     <td> '.$employee->civility->civility. ' ' .$employee->first_name.' '.$employee->last_name . ' </td>
                 </tr>
                 <tr>
-                    <th scope="row"> Titre du poste </th>
+                    <th> Titre du poste </th>
                     <td> '.$employee->position_title->position_title.' </td>
                 </tr>
                 <tr>
-                    <th scope="row"> Supervisor </th>
+                    <th> Supervisor </th>
                     <td> '.$employee->supervisor->name.' </td>
                 </tr>
                 <tr>
-                    <th scope="row"> Building </th>
+                    <th> Building </th>
                     <td> '. $employee->building->building.' </td>
                 </tr>
             </table>
-            <div class="related"> ';
+            <div> ';
             
                 if (!empty($employee->employee_formations)) {
-                    $page .= '<table cellpadding="0" cellspacing="0">
+                    $page .= '<table>
                     <tr>
-                        <th scope="col"> Formation </th>
-                        <th scope="col"> Statut </th>
-                        <th scope="col"> Fréquence </th>
-                        <th scope="col"> Faite le </th>
-                        <th scope="col"> Prévue le </th>
-                        <th scope="col"> Expirée </th>
-                        <th scope="col"> À venir </th>
-                        <th scope="col"> À faire </th>
-                        <th scope="col"> Jamais faite </th>
+                        <th> Formation </th>
+                        <th> Statut </th>
+                        <th> Fréquence </th>
+                        <th> Faite le </th>
+                        <th> Prévue le </th>
+                        <th> Expirée </th>
+                        <th> À venir </th>
+                        <th> À faire </th>
+                        <th> Jamais faite </th>
                     </tr>';
 
                     foreach ($employee->employee_formations as $employeeFormations){
@@ -371,5 +315,109 @@ class EmployeesController extends AppController
     }
 
 
+    public function addDate($date,$frequenceid){
+        $value;
+
+        switch($frequenceid){
+            case 1:
+                $value = '1 week';
+            break;
+
+            case 2:
+                $value= '1 month';
+            break;
+
+            case 3:
+                $value= '3 month';
+            break;
+
+            case 4:
+                $value= '6 month';
+            break;
+
+            case 5:
+                $value= '18 month';
+            break;
+
+            case 6:
+                $value= '1 year';
+            break;
+
+            case 7:
+                $value= '2 year';
+            break;
+
+            case 8:
+                $value= '3 year';
+            break;
+
+            case 9:
+                $value= '4 year';
+            break;
+
+            case 10:
+                $value= '5 year';
+            break;
+
+            case 11:
+                $value= null;
+            break;
+
+            case 12:
+                $value= null;
+            break;
+        }
+
+        if($value == null){
+            return null;
+        }else{
+            return $ $datetime = date('d/m/y', strtotime($date .  $value ) );
+        }
+        
+    }
+
+    public function isExpired($datedone,$date){
+        $bool = 'Yes';
+        $no = 'No';
+
+        if($date == null || $datedone == null ){
+            $bool = $no;
+        }else if($date < $datedone){
+            $bool = $no;
+        }
+    }
+
+    public function isVenir($datedone,$date){
+        $bool = 'Yes';
+        $no = 'No';
+
+        if($date == null || $datedone == null ){
+            $bool = $no;
+        }else if($date > $datedone){
+            $bool = $no;
+        }
+    }
+
+    public function isAFair($datedone,$date){
+        $bool = 'Yes';
+        $no = 'No';
+
+        if($date == null || $datedone == null ){
+            $bool = $no;
+        }else if($date > $datedone){
+            $bool = $no;
+        }
+    }
+
+    public function isjamaisfait($datedone,$date){
+        $bool = 'Yes';
+        $no = 'No';
+
+        if($date == null || $datedone == null ){
+            $bool = $no;
+        }else if($date > $datedone){
+            $bool = $no;
+        }
+    
 
 }

@@ -133,6 +133,7 @@ ob_start();
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
+        
     </div>
 </div>
 </html>
@@ -142,6 +143,8 @@ ob_end_flush();
 $adress = $employee->email; 
 $_SESSION['adress'] = $adress;
 $_SESSION['page'] = $page;
+
+
 ?>
 <?php echo $this->Form->create('Send', array('action'=>'mailPage'));
         echo$this->Form->button(__('Send'));
