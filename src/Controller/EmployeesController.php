@@ -5,6 +5,8 @@ use Cake\Mailer\Email;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\EmployeeFormation;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
 /**
  * Employees Controller
  *
@@ -296,8 +298,8 @@ class EmployeesController extends AppController
     
                     <td style="border: 1px solid #000;"> '.$date.' </td>
                     <td style="border: 1px solid #000;"> '.$this->isExpired($datedone,$date).' </td>
-                    <td style="border: 1px solid #000;"> '.$this->isVenir($datedone,$date).' </td>
-                    <td style="border: 1px solid #000;"> '.$this->isAFair($datedone,$date).'  </td>
+                    <td style="border: 1px solid #000;"> '.$this->isVenir($datedone,$date,$formation->start_reminder_id).' </td>
+                    <td style="border: 1px solid #000;"> '.$this->isAFair($datedone,$date,$formation->start_reminder_id).'  </td>
                     <td style="border: 1px solid #000;"> '.$this->isjamaisfait($datedone,$date).' </td>
                 </tr>';
                     } 
@@ -372,7 +374,69 @@ class EmployeesController extends AppController
         if($value == null){
             return null;
         }else{
-            return $ $datetime = date('d/m/y', strtotime($date .  $value ) );
+            return  new Time(date('m/d/y', strtotime($date .  $value ) ));
+        }
+        
+    }
+
+    public function removeDate($date,$frequenceid){
+        $value = null;
+
+        switch($frequenceid){
+            case 1:
+                $value = '-1 week';
+            break;
+
+            case 2:
+                $value= '-1 month';
+            break;
+
+            case 3:
+                $value= '-3 month';
+            break;
+
+            case 4:
+                $value= '-6 month';
+            break;
+
+            case 5:
+                $value= '-18 month';
+            break;
+
+            case 6:
+                $value= '-1 year';
+            break;
+
+            case 7:
+                $value= '-2 year';
+            break;
+
+            case 8:
+                $value= '-3 year';
+            break;
+
+            case 9:
+                $value= '-4 year';
+            break;
+
+            case 10:
+                $value= '-5 year';
+            break;
+
+            case 11:
+                $value= null;
+            break;
+
+            case 12:
+                $value= null;
+            break;
+        }
+
+        if($value == null){
+            return null;
+        }else{
+            $clone = clone $date;
+            return  $clone->modify($value);
         }
         
     }
@@ -381,7 +445,7 @@ class EmployeesController extends AppController
         $bool = 'Yes';
         $no = 'No';
 
-        if($date > Time::now() && $date !=null && $datedone!=null){
+       if($date < Time::now() && $date !=null && $datedone!=null){
 
         }else{
             $bool = $no;
@@ -390,31 +454,41 @@ class EmployeesController extends AppController
         return $bool;
     }
 
-    public function isVenir($datedone,$date){
+    public function isVenir($datedone,$date,$id){
         $bool = '';
 
         if($datedone == null){
             
-        }else if($date != null && !($date < Time::now()) ){
-            
+        }else if($this->isAFair($datedone,$date,$id) == 'Yes'){
+           
+           // $reminderStart = $this->removeDate($date,$id);
+           // $bool = $reminder - Time::now() ;
+            $difference = strtotime(Time::now()) - strtotime($reminder); 
+            $bool = $difference;
+
         }
         return $bool;
     }
 
-    public function isAFair($datedone,$date){
+    public function isAFair($datedone,$date,$id){
         $bool = 'Yes';
         $no = 'No';
-
-        if($date != null && !($date > Time::now()) ){
-            
-        }else if($this->isExpired($datedone,$date) == 'Yes'){
-
-        }
-        else{
+        if($datedone != null && $date != null && $date > Time::now() ){
+            $reminderStart = $this->removeDate($date,$id);
+            if($reminderStart<Time::now()){
+              
+            }else{
+                $bool = $no;
+                
+            }
+        }else{
             $bool = $no;
+            
         }
+        
         return $bool;
     }
+    
 
     public function isjamaisfait($datedone,$date){
         $bool = 'Yes';

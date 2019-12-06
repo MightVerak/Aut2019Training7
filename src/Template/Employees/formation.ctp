@@ -120,7 +120,7 @@ ob_start();
             break;
         }
 
-        $datetime = date('d/m/y', strtotime($employeeFormations->date_done .  $date ) )
+        $datetime =  date('d/m/y', strtotime($employeeFormations->date_done .  $date ) )
     ?>
 
 
