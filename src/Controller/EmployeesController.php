@@ -237,7 +237,7 @@ class EmployeesController extends AppController
         <h2>Plan de formation</h2>
         <hr size="2" color="red">
         <div>
-            <table style="border-color: #000; border-collapse: collapse;  border: 1px solid #000; text-align: left;" >
+            <table style=" text-align: left;" >
                 <tr>
                     <th>Numéro de l\'employé: </th>
                     <td> '. $employee->number . ' </td>
@@ -283,21 +283,22 @@ class EmployeesController extends AppController
             
                     $formationposition = $formationposition->first(); 
                     $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); 
-
+                    $datedone = $employeeFormations->date_done;
+                    $date = $this->addDate($datedone,$formation->frequence_id);
                     $page .= '<tr style="border: 1px solid #000;">
                     
                     <td style="border: 1px solid #000;"> '.$formation->title.' </td>
                     <td style="border: 1px solid #000;"> '.$status->formation_status.' </td>
                     <td style="border: 1px solid #000;"> '.TableRegistry::get('frequences')->get($formation->frequence_id)->frequence .' </td>
-                    <td style="border: 1px solid #000;"> '.$employeeFormations->date_done.' </td>
+                    <td style="border: 1px solid #000;"> '. $datedone .' </td>
                    
     
     
-                    <td style="border: 1px solid #000;">  </td>
-                    <td style="border: 1px solid #000;">  </td>
-                    <td style="border: 1px solid #000;">  </td>
-                    <td style="border: 1px solid #000;"> </td>
-                    <td style="border: 1px solid #000;">  </td>
+                    <td style="border: 1px solid #000;"> '.$date.' </td>
+                    <td style="border: 1px solid #000;"> '.$this->isExpired($datedone,$date).' </td>
+                    <td style="border: 1px solid #000;"> '.$this->isVenir($datedone,$date).' </td>
+                    <td style="border: 1px solid #000;"> '.$this->isAFair($datedone,$date).'  </td>
+                    <td style="border: 1px solid #000;"> '.$this->isjamaisfait($datedone,$date).' </td>
                 </tr>';
                     } 
                     
@@ -316,47 +317,47 @@ class EmployeesController extends AppController
 
 
     public function addDate($date,$frequenceid){
-        $value;
+        $value = null;
 
         switch($frequenceid){
             case 1:
-                $value = '1 week';
+                $value = '+1 week';
             break;
 
             case 2:
-                $value= '1 month';
+                $value= '+1 month';
             break;
 
             case 3:
-                $value= '3 month';
+                $value= '+3 month';
             break;
 
             case 4:
-                $value= '6 month';
+                $value= '+6 month';
             break;
 
             case 5:
-                $value= '18 month';
+                $value= '+18 month';
             break;
 
             case 6:
-                $value= '1 year';
+                $value= '+1 year';
             break;
 
             case 7:
-                $value= '2 year';
+                $value= '+2 year';
             break;
 
             case 8:
-                $value= '3 year';
+                $value= '+3 year';
             break;
 
             case 9:
-                $value= '4 year';
+                $value= '+4 year';
             break;
 
             case 10:
-                $value= '5 year';
+                $value= '+5 year';
             break;
 
             case 11:
@@ -376,50 +377,60 @@ class EmployeesController extends AppController
         
     }
 
-    public function isExpired($datedone,$date){
+    public function isExpired($datedone,$date ){
         $bool = 'Yes';
         $no = 'No';
 
-        if($date == null || $datedone == null ){
-            $bool = $no;
-        }else if($date < $datedone){
+        if($date > Time::now() && $date !=null && $datedone!=null){
+
+        }else{
             $bool = $no;
         }
+
+        return $bool;
     }
 
     public function isVenir($datedone,$date){
-        $bool = 'Yes';
-        $no = 'No';
+        $bool = '';
 
-        if($date == null || $datedone == null ){
-            $bool = $no;
-        }else if($date > $datedone){
-            $bool = $no;
+        if($datedone == null){
+            
+        }else if($date != null && !($date < Time::now()) ){
+            
         }
+        return $bool;
     }
 
     public function isAFair($datedone,$date){
         $bool = 'Yes';
         $no = 'No';
 
-        if($date == null || $datedone == null ){
-            $bool = $no;
-        }else if($date > $datedone){
+        if($date != null && !($date > Time::now()) ){
+            
+        }else if($this->isExpired($datedone,$date) == 'Yes'){
+
+        }
+        else{
             $bool = $no;
         }
+        return $bool;
     }
 
     public function isjamaisfait($datedone,$date){
         $bool = 'Yes';
         $no = 'No';
 
-        if($date == null || $datedone == null ){
-            $bool = $no;
-        }else if($date > $datedone){
+        if($date == null && $datedone == null ){
+
+        }else if( $datedone == null){
+            
+        }else{
             $bool = $no;
         }
+        return $bool;
 
     }
     
+
 
 }
