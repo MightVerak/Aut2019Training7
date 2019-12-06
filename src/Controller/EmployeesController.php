@@ -459,13 +459,11 @@ class EmployeesController extends AppController
 
         if($datedone == null){
             
-        }else if($this->isAFair($datedone,$date,$id) == 'Yes'){
+        }else if($this->isAFair($datedone,$date,$id) == 'Yes' && $this->isExpired($datedone,$date) != 'Yes'){
            
-           // $reminderStart = $this->removeDate($date,$id);
-           // $bool = $reminder - Time::now() ;
-            $difference = strtotime(Time::now()) - strtotime($reminder); 
-            $bool = $difference;
-
+           $reminderStart = $this->removeDate($date,$id);
+           // MARCHE PAS
+           $bool = date_diff(date("d/m/y"),date( $reminderStart));
         }
         return $bool;
     }
@@ -481,9 +479,10 @@ class EmployeesController extends AppController
                 $bool = $no;
                 
             }
+        }else if ($this->isExpired($datedone,$date) == 'Yes'){
+            
         }else{
             $bool = $no;
-            
         }
         
         return $bool;
