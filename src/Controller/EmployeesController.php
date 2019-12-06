@@ -237,7 +237,7 @@ class EmployeesController extends AppController
         <h2>Plan de formation</h2>
         <hr size="2" color="red">
         <div>
-            <table>
+            <table style="border-color: #000; border-collapse: collapse;  border: 1px solid #000; text-align: left;" >
                 <tr>
                     <th>Numéro de l\'employé: </th>
                     <td> '. $employee->number . ' </td>
@@ -262,17 +262,17 @@ class EmployeesController extends AppController
             <div> ';
             
                 if (!empty($employee->employee_formations)) {
-                    $page .= '<table>
-                    <tr>
-                        <th> Formation </th>
-                        <th> Statut </th>
-                        <th> Fréquence </th>
-                        <th> Faite le </th>
-                        <th> Prévue le </th>
-                        <th> Expirée </th>
-                        <th> À venir </th>
-                        <th> À faire </th>
-                        <th> Jamais faite </th>
+                    $page .= '<table style="border-collapse: collapse;">
+                    <tr  style="border: 1px solid #000;">
+                        <th style="border: 1px solid #000;"> Formation </th>
+                        <th style="border: 1px solid #000;"> Statut </th>
+                        <th style="border: 1px solid #000;"> Fréquence </th>
+                        <th style="border: 1px solid #000;"> Faite le </th>
+                        <th style="border: 1px solid #000;"> Prévue le </th>
+                        <th style="border: 1px solid #000;"> Expirée </th>
+                        <th style="border: 1px solid #000;"> À venir </th>
+                        <th style="border: 1px solid #000;"> À faire </th>
+                        <th style="border: 1px solid #000;"> Jamais faite </th>
                     </tr>';
 
                     foreach ($employee->employee_formations as $employeeFormations){
@@ -284,20 +284,20 @@ class EmployeesController extends AppController
                     $formationposition = $formationposition->first(); 
                     $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); 
 
-                    $page .= '<tr>
+                    $page .= '<tr style="border: 1px solid #000;">
                     
-                    <td> '.$formation->title.' </td>
-                    <td> '.$status->formation_status.' </td>
-                    <td> '.TableRegistry::get('frequences')->get($formation->frequence_id)->frequence .' </td>
-                    <td> '.$employeeFormations->date_done.' </td>
+                    <td style="border: 1px solid #000;"> '.$formation->title.' </td>
+                    <td style="border: 1px solid #000;"> '.$status->formation_status.' </td>
+                    <td style="border: 1px solid #000;"> '.TableRegistry::get('frequences')->get($formation->frequence_id)->frequence .' </td>
+                    <td style="border: 1px solid #000;"> '.$employeeFormations->date_done.' </td>
                    
     
     
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td> </td>
-                    <td>  </td>
+                    <td style="border: 1px solid #000;">  </td>
+                    <td style="border: 1px solid #000;">  </td>
+                    <td style="border: 1px solid #000;">  </td>
+                    <td style="border: 1px solid #000;"> </td>
+                    <td style="border: 1px solid #000;">  </td>
                 </tr>';
                     } 
                     
@@ -418,6 +418,8 @@ class EmployeesController extends AppController
         }else if($date > $datedone){
             $bool = $no;
         }
+
+    }
     
 
 }
