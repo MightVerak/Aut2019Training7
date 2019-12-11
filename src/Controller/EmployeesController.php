@@ -447,7 +447,7 @@ class EmployeesController extends AppController
         $bool = '';
 
 
-       if($this->isExpired($datedone,$date)){
+       if($this->isExpired($datedone,$date) =='Yes'){
         $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
         $venir = date_create(($date->year."-".$date->month."-".$date->day));
         $maintenant = date_create();
@@ -478,7 +478,7 @@ class EmployeesController extends AppController
 
         if($datedone == null){
             
-        }else if($this->isAFair($datedone,$date,$id) == 'Yes' && $this->isExpired($datedone,$date) != 'Yes'){
+        }else if($datedone != null && $this->isAFair($datedone,$date,$id) == 'Yes' && $this->isExpired($datedone,$date) != 'Yes'){
         
            $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
            $venir = date_create(($date->year."-".$date->month."-".$date->day));
@@ -505,6 +505,8 @@ class EmployeesController extends AppController
                 
             }
         }else if ($this->isExpired($datedone,$date) == 'Yes'){
+            
+        }else if ($this->isjamaisfait($datedone,$date) =='Yes' && $date !='Yes'){
             
         }else{
             $bool = $no;
