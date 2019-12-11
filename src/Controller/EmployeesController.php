@@ -185,7 +185,9 @@ class EmployeesController extends AppController
             'contain' => ['Civilities', 'Languages', 'PositionTitles', 'Buildings', 'Supervisors', 'EmployeeFormations']
         ]);
 
-        $this->set('employee', $employee);
+        $controller = $this;
+
+        $this->set(compact('employee', 'controller'));
     }
     
     public function mailPage()
@@ -224,7 +226,7 @@ class EmployeesController extends AppController
 
         if ($employee->id != null) {
             $this->anonymeMail($employee);
-            $this->Flash->error(__('Sa marche.'));
+            $this->Flash->success(__('Plan de formation envoyer a '.$employee->email));
             return $this->redirect(['controller'=>'home','action' => 'index']);
         }
         $this->Flash->error(__('ostie de criss.'));
@@ -297,7 +299,7 @@ class EmployeesController extends AppController
     
     
                     <td style="border: 1px solid #000;"> '.$date.' </td>
-                    <td style="border: 1px solid #000;"> '.$this->isExpired($datedone,$date).' </td>
+                    <td style="border: 1px solid #000;"> '.$this->asExpired($datedone,$date).' </td>
                     <td style="border: 1px solid #000;"> '.$this->isVenir($datedone,$date,$formation->start_reminder_id).' </td>
                     <td style="border: 1px solid #000;"> '.$this->isAFair($datedone,$date,$formation->start_reminder_id).'  </td>
                     <td style="border: 1px solid #000;"> '.$this->isjamaisfait($datedone,$date).' </td>
@@ -441,6 +443,23 @@ class EmployeesController extends AppController
         
     }
 
+    public function asExpired($datedone,$date ){
+        $bool = '';
+
+
+       if($this->isExpired($datedone,$date)){
+        $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
+        $venir = date_create(($date->year."-".$date->month."-".$date->day));
+        $maintenant = date_create();
+       
+        
+        $diff = date_diff($maintenant, $venir);
+        $bool = $diff->format("%a days");
+        }
+
+        return $bool;
+    }
+
     public function isExpired($datedone,$date ){
         $bool = 'Yes';
         $no = 'No';
@@ -460,12 +479,7 @@ class EmployeesController extends AppController
         if($datedone == null){
             
         }else if($this->isAFair($datedone,$date,$id) == 'Yes' && $this->isExpired($datedone,$date) != 'Yes'){
-           
-
-           // $reminderStart = $this->removeDate($date,$id);
-           // $bool = $reminder - Time::now() ;
         
-     
            $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
            $venir = date_create(($date->year."-".$date->month."-".$date->day));
            $maintenant = date_create();
@@ -473,10 +487,7 @@ class EmployeesController extends AppController
            
            $diff = date_diff($maintenant, $venir);
            $bool = $diff->format("%a days");
-           
         
-
-
         }
         return $bool;
     }

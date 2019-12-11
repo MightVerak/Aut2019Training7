@@ -60,75 +60,20 @@ ob_start();
             where(['position_title_id' => $employee['position_title_id']]);
     
             $formationposition = $formationposition->first(); 
-            $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id); ?>
+            $status =   TableRegistry::get('FormationStatuses')->get($formationposition->formation_status_id);
+            $datedone = $employeeFormations->date_done;
+            $date = $controller->addDate($datedone,$formation->frequence_id);
+            ?>
             <tr>
-            
                 <td><?= h($formation->title) ?></td>
                 <td><?= h($status->formation_status) ?></td>
                 <td><?= h(TableRegistry::get('frequences')->get($formation->frequence_id)->frequence); ?></td>
-                <td><?= h($employeeFormations->date_done) ?></td>
-                <?=
-        $date = null;
-
-        switch($formation->frequence_id){
-            case 1:
-                $date= '+1 week';
-            break;
-
-            case 2:
-                $date= '+1 month';
-            break;
-
-            case 3:
-                $date= '+3 month';
-            break;
-
-            case 4:
-                $date= '+6 month';
-            break;
-
-            case 5:
-                $date= '+18 month';
-            break;
-
-            case 6:
-                $date= '+1 year';
-            break;
-
-            case 7:
-                $date= '+2 year';
-            break;
-
-            case 8:
-                $date= '+3 year';
-            break;
-
-            case 9:
-                $date= '+4 year';
-            break;
-
-            case 10:
-                $date= '+5 year';
-            break;
-
-            case 11:
-                $date = null;
-            break;
-
-            case 12:
-                $date = null;
-            break;
-        }
-
-        $datetime =  date('d/m/y', strtotime($employeeFormations->date_done .  $date ) )
-    ?>
-
-
-                <td><?= $employeeFormations->date_done == null || $date == null  ? '' : $datetime ; ?></td>
-                <td><?= ($employeeFormations->date_done != null && $date != null) && ($date != null && $datetime < $employeeFormations->date_done) ? __('Yes') : __('No'); ?></td>
-                <td><?= ($employeeFormations->date_done != null && $date != null) && ($date != null && $datetime > $employeeFormations->date_done) ? __('Yes') : __('No'); ?></td>
-                <td><?= ($employeeFormations->date_done == null && $date != null) || $datetime == Time::now() ? __('Yes') : __('No'); ?></td>
-                <td><?= $employeeFormations->date_done == null ? __('Yes') : __('No'); ?></td>
+                <td><?= $datedone ?></td>
+                <td><?= $date; ?></td>
+                <td><?= $controller->asExpired($datedone,$date); ?></td>
+                <td><?= $controller->isVenir($datedone,$date,$formation->start_reminder_id); ?></td>
+                <td><?= $controller->isAFair($datedone,$date,$formation->start_reminder_id); ?></td>
+                <td><?= $controller->isjamaisfait($datedone,$date); ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
