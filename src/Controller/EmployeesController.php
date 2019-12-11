@@ -463,8 +463,17 @@ class EmployeesController extends AppController
            
            // $reminderStart = $this->removeDate($date,$id);
            // $bool = $reminder - Time::now() ;
-            $difference = strtotime(Time::now()) - strtotime($reminder); 
-            $bool = $difference;
+           $datedone->year;
+     
+           $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
+           $venir = date_create(($date->year."-".$date->month."-".$date->day));
+           $maintenant = date_create();
+          
+           
+           $diff = date_diff($maintenant, $venir);
+           $bool = $diff->format("%a days");
+           
+        
 
         }
         return $bool;
@@ -473,6 +482,7 @@ class EmployeesController extends AppController
     public function isAFair($datedone,$date,$id){
         $bool = 'Yes';
         $no = 'No';
+
         if($datedone != null && $date != null && $date > Time::now() ){
             $reminderStart = $this->removeDate($date,$id);
             if($reminderStart<Time::now()){
