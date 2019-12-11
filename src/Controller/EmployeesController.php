@@ -463,7 +463,7 @@ class EmployeesController extends AppController
            
            // $reminderStart = $this->removeDate($date,$id);
            // $bool = $reminder - Time::now() ;
-           $datedone->year;
+        
      
            $maintenant = date_create($datedone->year."-".$datedone->month."-".$datedone->day);
            $venir = date_create(($date->year."-".$date->month."-".$date->day));
